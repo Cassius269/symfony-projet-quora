@@ -1,6 +1,6 @@
 /* Les variables */
 :root {
-    --couleurPrimaire: rgb(153, 232, 231);
+    --couleurPrimaire: rgb(60, 189, 187);
     --couleurPrimaire-light: white;
     --warningColor: red;
     --successColor: green;
@@ -15,6 +15,7 @@
 /* Initiliation des valeurs par défaut du site */
 html {
     font-size: 16px;
+
 }
 
 * {
@@ -23,21 +24,19 @@ html {
     box-sizing: border-box;
 }
 
-/* Mise en page globale */
+/* Stylisation de la mise en globale*/
 body {
-    background-color: var(--couleurPrimaire);
+    background-color: var(--couleurPrimaire-light);
     font-family: var(--policeDeCaracteres);
     color: var(--color);
     margin: 1rem auto 1rem auto;
-
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: minmax(200px, 1fr) repeat(3, 1fr);
     grid-template-rows: 1fr 4fr 1fr;
-    grid-template-areas: "header header header"
-        "aside main main"
-        "footer footer footer"
+    grid-template-areas: "header header header header"
+        "aside main main main"
+        "footer footer footer footer"
     ;
-
     height: 100vh;
 }
 
@@ -59,13 +58,6 @@ h1:hover {
 ul {
     list-style: none;
 }
-
-
-.mainSerieImages img {
-    border: 3px solid black;
-    width: 400px;
-}
-
 
 /* padding */
 
@@ -96,25 +88,50 @@ input {
 
 #logo {
     width: 3rem;
+    height: 50px;
 }
 
 header {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     grid-area: header;
+    margin: 0 10rem 0 10rem;
+    min-width: 427px;
 }
 
 
 aside {
     grid-area: aside;
+    background-color: yellow;
+    margin-left: 10rem;
+    min-width: 180px;
 }
 
 main {
-    grid-area: main
+    grid-area: main;
+    background-color: rgb(179, 128, 170);
+    margin-right: 10rem;
 }
 
 footer {
-    grid-area: footer
+    grid-area: footer;
+    background-color: rgb(78, 110, 178);
 }
 
-/* stylisation de la mise en globale*/
+header button {
+    height: 2rem;
+    padding: 0.5rem 1rem 1.5rem 1rem;
+}
+
+/* stylisation des boutons */
+
+
+#headerButtonInscription {
+    background-color: var(--couleurPrimaire);
+}
+
+#headerButtonConnexion {
+    box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}

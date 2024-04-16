@@ -1,8 +1,11 @@
 <header>
-	<img src="{{ asset("./icons/favicon.png")}}" alt="logo" id="logo">
+	<a href="{{path("home")}}"><img src="{{ asset("icons/logo.png")}}" alt="logo" id="logo"></a>
 	<form action="" class="formSearch">
 		<input type="search" name="q">
 		<input type="submit" id="searchButton" value="">
 	</form>
-	<button>Connexion/inscription</button>
+	<div>
+		<button id="headerButtonInscription">inscription</button>
+		<button id="headerButtonConnexion">Connexion</button>
+	</div>
 </header>
