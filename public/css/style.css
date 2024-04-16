@@ -1,0 +1,120 @@
+/* Les variables */
+:root {
+    --couleurPrimaire: rgb(153, 232, 231);
+    --couleurPrimaire-light: white;
+    --warningColor: red;
+    --successColor: green;
+    --policeDeCaracteres: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    --border: 1px solid var(--color);
+    --border-radius: 3px;
+    --color: #636466;
+    --color-dark: #444;
+}
+
+/* Initiliation des valeurs par défaut du site */
+html {
+    font-size: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Mise en page globale */
+body {
+    background-color: var(--couleurPrimaire);
+    font-family: var(--policeDeCaracteres);
+    color: var(--color);
+    margin: 1rem auto 1rem auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 4fr 1fr;
+    grid-template-areas: "header header header"
+        "aside main main"
+        "footer footer footer"
+    ;
+
+    height: 100vh;
+}
+
+
+/* Stylisation des titres */
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: var(--color-dark);
+}
+
+h1:hover {
+    background-color: bisque;
+
+}
+
+ul {
+    list-style: none;
+}
+
+
+.mainSerieImages img {
+    border: 3px solid black;
+    width: 400px;
+}
+
+
+/* padding */
+
+/* Input search */
+input[type="search"] {
+    background-color: orange;
+}
+
+
+
+input {
+    height: 35px;
+}
+
+#searchButton {
+    background-image: url("../icons/search.png");
+    background-size: contain;
+    width: 2rem;
+    padding: 0.5rem;
+}
+
+.formSearch {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    width: max-content;
+}
+
+#logo {
+    width: 3rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    grid-area: header;
+}
+
+
+aside {
+    grid-area: aside;
+}
+
+main {
+    grid-area: main
+}
+
+footer {
+    grid-area: footer
+}
+
+/* stylisation de la mise en globale*/
