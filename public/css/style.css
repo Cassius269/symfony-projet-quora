@@ -5,17 +5,18 @@
     --warningColor: red;
     --successColor: green;
     --policeDeCaracteres: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    --box-shadow: 20px 8px 24px rgba(137, 137, 126, 0.2);
     --border: 1px solid var(--color);
-    --border-radius: 3px;
+    --border-radius: 10px;
     --color: #636466;
     --color-dark: #444;
+    --footer-background: #2980b9;
 }
 
 /* Initiliation des valeurs par défaut du site */
 html {
     font-size: 16px;
-
+    font-style: var(--policeDeCaracteres);
 }
 
 * {
@@ -24,17 +25,19 @@ html {
     box-sizing: border-box;
 }
 
-/* Stylisation de la mise en globale*/
+/* Stylisation de la mise en globale en mobile first*/
 body {
     background-color: var(--couleurPrimaire-light);
     font-family: var(--policeDeCaracteres);
     color: var(--color);
-    margin: 1rem auto 1rem auto;
+    margin: 2rem auto 1rem auto;
     display: grid;
-    grid-template-columns: minmax(200px, 1fr) repeat(3, 1fr);
-    grid-template-rows: 1fr 4fr 1fr;
+    grid-template-columns: 200px minmax(300px, 300px) 1fr 200px;
+    grid-template-rows: 100px 20px 4fr 100px;
     grid-template-areas: "header header header header"
-        "aside main main main"
+        ". . . ."
+        ". aside main ."
+        /* Les points représentent des espaces vides */
         "footer footer footer footer"
     ;
     height: 100vh;
@@ -91,47 +94,140 @@ input {
     height: 50px;
 }
 
+
 header {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     grid-area: header;
-    margin: 0 10rem 0 10rem;
-    min-width: 427px;
+    margin: 0 12.5rem 0 12.5rem;
+    box-shadow: 0px 4px 8px -2px rgba(9, 30, 66, 0.25);
 }
 
 
 aside {
     grid-area: aside;
-    background-color: yellow;
-    margin-left: 10rem;
     min-width: 180px;
 }
 
 main {
     grid-area: main;
     background-color: rgb(179, 128, 170);
-    margin-right: 10rem;
+    min-width: 400px;
 }
 
-footer {
-    grid-area: footer;
-    background-color: rgb(78, 110, 178);
-}
 
-header button {
-    height: 2rem;
-    padding: 0.5rem 1rem 1.5rem 1rem;
-}
 
 /* stylisation des boutons */
 
+button {
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    height: 2rem;
+    padding: 1rem 1rem 1.7rem 1rem;
+}
 
 #headerButtonInscription {
     background-color: var(--couleurPrimaire);
+    color: var(--couleurPrimaire-light);
 }
 
 #headerButtonConnexion {
     box-shadow: var(--box-shadow);
     box-shadow: var(--box-shadow);
+}
+
+#headerButtonInscription,
+#headerButtonConnexion {
+    cursor: pointer;
+}
+
+/* changer la couleur du backgroun du bouton connexion au clic */
+#headerButtonConnexion:active {
+    background-color: var(--couleurPrimaire);
+}
+
+#headerButtonInscription:active {
+    color: var(--couleurPrimaire-light);
+    background-color: var(--color-dark)
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Stylisation du footer */
+footer {
+    grid-area: footer;
+    background-color: rgb(78, 110, 178);
+    background-color: var(--footer-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer p {
+    text-align: center;
+    color: var(--couleurPrimaire-light)
+}
+
+/* Stylisation de l'aside */
+#asideButtonQuestion {
+    background-color: var(--couleurPrimaire);
+    color: var(--couleurPrimaire-light);
+    height: 3.5rem;
+    min-width: 250px;
+    ;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 3rem;
+}
+
+aside button img {
+    width: 1.5rem;
+    position: relative;
+    top: 5px;
+    right: 0.5rem;
+}
+
+aside nav {
+    margin: 1rem 0 0 1rem;
+}
+
+aside li {
+    margin-bottom: 0.3rem;
+}
+
+.asideNavButton {
+    border: none;
+    border-radius: 0;
+    padding-top: 2rem;
+}
+
+nav li a {
+    cursor: pointer;
+}
+
+.asideNavButton:hover {
+    background-color: #7fc5d6;
+}
+
+/* Cibler au survol de la souris les boutons dans l'aside n'ayant pas d'ID  #asideButtonQuestion */
+
+aside nav button:not(#asideButtonQuestion) {
+    display: flex;
+    align-items: center;
+}
+
+.navButtonActive {
+    background-color: red;
+    border-left: 6px solid var(--couleurPrimaire);
+    max-width: 200px;
+    background-color: #9fe9e9;
+}
+
+.icon {
+    position: relative;
+    top: -2px;
 }

@@ -5,7 +5,12 @@
 		<input type="submit" id="searchButton" value="">
 	</form>
 	<div>
-		<button id="headerButtonInscription">inscription</button>
-		<button id="headerButtonConnexion">Connexion</button>
+		{#Prévoir de modifier les noms des routes pour les pages de connexion et d'inscription #}
+		<a href="{{path("home")}}">
+			<button id="headerButtonInscription">Inscription</button>
+		</a>
+		<a href="{{path("home")}}">
+			<button id="headerButtonConnexion">Connexion</button>
+		</a>
 	</div>
 </header>

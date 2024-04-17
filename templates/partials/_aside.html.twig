@@ -1,19 +1,29 @@
 <aside>
 	<nav>
 		<ul>
-			<a href="#">
-				<li>Liste des questions</li>
-			</a>
-			<a href="#">
-				<li>Mes questions</li>
-			</a>
-			<a href="#">
-				<li>Mes questions</li>
-			</a>
-			<a href="#">
-				<li>Mes Réponses</li>
-			</a>
-		</ul>
-	</nav>
+			<li>
+				<a href="#">
 
-</aside>
+					<button id="asideButtonQuestion">
+						<img alt="logo représentant un point d'interrogation" src="{{asset("icons/question.svg")}}">Poser une question
+					</button>
+				</a>
+			</li>
+		</li>
+		<li>
+			<a href="#">
+				<button class="asideNavButton"><img src="{{ asset("icons/home.svg")}}" alt="" class="icon">Liste des questions</button>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<button class="asideNavButton"><img src="{{ asset("icons/pen.svg")}}" alt="" class="icon">Mes questions</button>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<button class="asideNavButton"><img src="{{ asset("icons/puzzle-piece.svg")}}" alt="" class="icon">Mes questions</button>
+			</a>
+		</li>
+	</ul>
+</nav></aside>
