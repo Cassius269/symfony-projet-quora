@@ -177,7 +177,6 @@ footer p {
     color: var(--couleurPrimaire-light);
     height: 3.5rem;
     min-width: 250px;
-    ;
     font-weight: bold;
     font-size: 1.2rem;
     margin-bottom: 1rem;
@@ -199,18 +198,24 @@ aside li {
     margin-bottom: 0.3rem;
 }
 
+
 .asideNavButton {
     border: none;
     border-radius: 0;
     padding-top: 2rem;
+    min-width: 16rem;
 }
 
-nav li a {
+nav li button {
     cursor: pointer;
 }
 
 .asideNavButton:hover {
     background-color: #7fc5d6;
+}
+
+.leftbarre {
+    border-left: 6px solid rgb(247, 243, 243);
 }
 
 /* Cibler au survol de la souris les boutons dans l'aside n'ayant pas d'ID  #asideButtonQuestion */
@@ -221,10 +226,10 @@ aside nav button:not(#asideButtonQuestion) {
 }
 
 .navButtonActive {
-    background-color: red;
     border-left: 6px solid var(--couleurPrimaire);
     max-width: 200px;
     background-color: #9fe9e9;
+    border-left: 6px solid var(--couleurPrimaire);
 }
 
 .icon {
