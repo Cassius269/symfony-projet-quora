@@ -31,9 +31,7 @@ class QuestionController extends AbstractController
 
         // Traiter le formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            echo '<pre>';
-            var_dump($form->getData());
-            echo '</pre>';
+            dd($form->getData());
         }
         // Rendre la vue du formulaire
         return $this->render('question/index.html.twig', [

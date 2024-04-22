@@ -4,41 +4,20 @@
 {% endblock %}
 
 {% block body %}
-	<style>
-		.groupeInput {
-			display: flex;
-			flex-direction: column;
-			color: black
-		}
-
-		#question_title {
-			background: grey;
-			padding: 1.5rem 0
-		}
-
-		label {
-			font-size: 2.5rem
-		}
-
-		textarea {
-			resize: none;
-			height: 20rem;
-			font-size: 1.5rem
-		}
-	</style>
 	<main>
 		<h1>Edition d'une question</h1>
-		{{form_start(askForm)}}
+		{{form_start(askForm, {'attr':{'class':'formAskQuestion'}})}}
 		<div class="groupeInput">
 			{{ form_label(askForm.title)}}
 			{{ form_widget(askForm.title)}}
-
+			{{form_errors(askForm.title)}}
 		</div>
 		<div class="groupeInput">
 			{{ form_label(askForm.content)}}
 			{{ form_widget(askForm.content)}}
+			{{form_errors(askForm.content)}}
 		</div>
-		{{ form_widget(askForm.submit) }}
-		{{form_end(askForm, { render_rest: false})}}
+		<input type="submit" value="Publier une question">
+		{{form_end(askForm, { render_rest: true})}}
 	</main>
 {% endblock %}
