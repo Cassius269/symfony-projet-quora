@@ -2,11 +2,12 @@
 	<nav>
 		<ul>
 			<li>
-				<button id="asideButtonQuestion">
-					<a href="#">
+				<a href="{{ path('asqQuestion') }}">
+					<button id="asideButtonQuestion">
 						<img alt="logo représentant un point d'interrogation" src="{{asset("icons/question.svg")}}">Poser une question
-					</a>
-				</button>
+					</button>
+				</a>
+
 			</li>
 		</li>
 		<li>
@@ -23,7 +24,7 @@
 		</li>
 		<li>
 			<button class="asideNavButton leftbarre">
-				<a href="#"><img src="{{ asset("icons/puzzle-piece.svg")}}" alt="" class="icon">Mes questions</a>
+				<a href="#"><img src="{{ asset("icons/puzzle-piece.svg")}}" alt="" class="icon">Mes réponses</a>
 			</button>
 		</li>
 	</ul>
