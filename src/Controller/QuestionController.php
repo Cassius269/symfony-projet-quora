@@ -31,7 +31,8 @@ class QuestionController extends AbstractController
 
         // Traiter le formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
+            //dd($form->getData());
+            //array_push(HomeController::$questions, $form->getData());
         }
         // Rendre la vue du formulaire
         return $this->render('question/index.html.twig', [

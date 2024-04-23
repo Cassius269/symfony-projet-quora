@@ -17,7 +17,11 @@
 			{{ form_widget(askForm.content)}}
 			{{form_errors(askForm.content)}}
 		</div>
-		<input type="submit" value="Publier une question">
+		<div class="formAskQuestionDivSubmit">
+			<input type="submit" value="Publier une question">
+			{{form_rest(askForm)}}
+			{# Afficher le reste du formulaire c-à-d l'input caché contenant le token CSRF#}
+		</div>
 		{{form_end(askForm, { render_rest: true})}}
 	</main>
 {% endblock %}

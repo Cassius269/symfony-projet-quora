@@ -1,8 +1,116 @@
 {% extends "base.html.twig" %}
 {% block body %}
+
+	<style>
+		.content {
+			display: flex;
+			flex-direction: column;
+			min-width: 90%;
+		}
+
+		.votes {
+			min-width: 10%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.articleQuestion {
+			display: flex;
+			padding: 40px;
+			background: white;
+			background: #FEFBF6;
+			box-shadow: rgba(0, 0, 0, 0.18) 0 2px 4px;
+			margin-bottom: 2rem;
+		}
+
+		.articleQuestion:active {
+			box-shadow: rgba(0, 0, 0, 0.08) 0 4px 12px;
+		}
+
+		.mainArticleDivResponse {
+			display: flex;
+			justify-content: flex-end;
+		}
+
+		.mainArticleDivResponse p {
+			margin-right: 1rem;
+		}
+
+		#question {
+			margin: 2rem 0;
+			padding: 0 0 50px;
+			border-bottom: 1px solid #d9d9d9;
+			cursor: pointer;
+			font-size: 18px
+		}
+
+		.divAuthor {
+			display: flex;
+		}
+
+		.imageProfileAuthor {
+			height: 35px;
+			border-radius: 50%;
+			margin-right: 7px;
+		}
+
+		.nbreOfResponse {
+			margin-left: 10px;
+			align-content: center;
+		}
+
+		.author {
+			color: rgb(37, 150, 190);
+		}
+
+		.negatif {
+			color: red;
+		}
+
+		.positif {
+			color: #40A2E3;
+		}
+	</style>
 	<main>
-		<h1>Hello
-		</h1>
-		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci quaerat animi dolorem deserunt doloribus dolore, laboriosam velit voluptates dolores praesentium. Quisquam, quas! Minus quae explicabo accusamus ad excepturi aliquid veniam?</p>
+		<h1>Liste des questions</h1>
+		{% if questions %}
+			<ul>
+				{% for question in questions %}
+					{% set totalVotes = question.upvote - question.downvote %}
+					<li>
+						<article class="articleQuestion">
+							<div class="votes">
+								<i class="fa-solid fa-arrow-up {{ totalVotes > 0 ? " positif": " "}}" alt="icône représentant les votes positifs"></i>
+								<p class={{ (totalVotes > 0 ) ? "positif" : (totalVotes != 0) ? "negatif" : ""}}>{{ totalVotes }}</p>
+								<i class="fa-solid fa-arrow-down {{ totalVotes < 0 ? " negatif" : " "}}" alt="icône représentant les votes négatifs" class="{{ totalVotes > 0 ? "positif":"negatif"}}"></i>
+							</div>
+							<div class="content">
+								<div class="Maincontent">
+									<h2>{{ question.title}}</h2>
+									<a href="">
+										<p id="question">{{ question.content}}</p>
+									</a>
+									<div class="divAuthor">
+										<img class="imageProfileAuthor" src='{{question.author.imageProfile}}' alt="image de profil">
+										<p style="align-content: center">Demandé par
+											<a href="#" class="author">{{ question.author.name}}</a>
+										</p>
+									</div>
+								</div>
+
+								<div class="mainArticleDivResponse">
+									<img src="{{ asset('icons/responses.svg')}}" alt="logo reponses">
+									<p class="nbreOfResponse">{{ question.nbrOfResponses }}</p>
+								</div>
+							</div>
+						</article>
+					</li>
+				{% endfor %}
+			</ul>
+
+		{% endif %}
+
+
 	</main>
 {% endblock %}

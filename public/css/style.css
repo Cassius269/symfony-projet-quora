@@ -25,6 +25,11 @@ html {
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+    color:black;
+}
+
 /* Stylisation de la mise en globale en mobile first*/
 body {
     background-color: var(--couleurPrimaire-light);
@@ -57,6 +62,12 @@ h1:hover {
     background-color: bisque;
 
 }
+
+h1 {
+    margin: 2rem 1rem;
+    padding: 1rem;
+}
+
 
 ul {
     list-style: none;
@@ -116,7 +127,6 @@ aside {
 
 main {
     grid-area: main;
-    background-color: rgb(121, 192, 182);
     min-width: 400px;
 }
 
@@ -249,7 +259,6 @@ aside nav button:not(#asideButtonQuestion) {
 }
 
 #question_title {
-    background: grey;
     padding: 1.5rem 0
 }
 
@@ -265,7 +274,7 @@ textarea {
 }
 
 .formAskQuestion * {
-    margin-bottom:1rem
+    margin-bottom:1rem;
 }
 form input {
     font-size: 1.5rem;
@@ -277,3 +286,20 @@ form input {
     padding: 1rem 1rem 3rem 1rem;
     border-radius: var(--border-radius);
 }
+
+.formAskQuestion {
+        max-width: 700px;
+        margin: auto;
+        margin-bottom: 4rem;
+        padding: 2rem 2rem;
+        border-radius: var(--border-radius);
+        background: #FEFBF6;
+        box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
+}
+
+.formAskQuestionDivSubmit {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
+
