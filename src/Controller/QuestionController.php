@@ -7,10 +7,8 @@ use App\Form\QuestionType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class QuestionController extends AbstractController
 {
@@ -40,10 +38,25 @@ class QuestionController extends AbstractController
             return $this->render('question/index.html.twig', [
                 'askForm' => $form->createView()
             ]);
+        } elseif ($param != "ask" && is_numeric($param) == false) {
+            throw $this->createNotFoundException('Le paramètre n\'est pas un id disponible ni \'ask\' par défaut');
         }
 
         if (is_numeric($param)) {
-            return $this->render('detailledQuestion.html.twig', ["question" => (HomeController::$questions[$param])]);
+            // stocker la variable question 
+            $questions = HomeController::$questions;
+
+            // verifier si le paramètre numérique entré appartient au tableau des questions
+            $questionsById = array_column($questions, 'id');
+
+            $result = in_array($param, $questionsById, $strict = true);
+
+            // Si ok retourner la vue de la question en détail
+            // sinon rediriger l'utilisateur avec un code d'erreur 404
+            if ($result == true || isset($questionsById["$param"]) != true) {
+                throw $this->createNotFoundException('L\'ID entré est invalide et indispobible dans le tableau des questions');
+            }
+            return $this->render('question/detailledQuestion.html.twig', ["question" => $questions[$param]]);
         }
     }
 }
