@@ -15,28 +15,35 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class QuestionController extends AbstractController
 {
     #[Route(
-        path: '/question/ask',
+        path: '/question/{param}',
         name: 'asqQuestion'
     )]
-    public function index(Request $request): Response
+    public function index(Request $request, string|int $param = 'ask'): Response
     {
-        // Créer une nouvelle instance de l'objet question 
-        $question = new Question();
 
-        // Créer le formulaire
-        $form = $this->createForm(QuestionType::class, $question);
+        if ($param === 'ask') {
+            // Créer une nouvelle instance de l'objet question 
+            $question = new Question();
 
-        // Reccuillir la requete
-        $form->handleRequest($request);
+            // Créer le formulaire
+            $form = $this->createForm(QuestionType::class, $question);
 
-        // Traiter le formulaire
-        if ($form->isSubmitted() && $form->isValid()) {
-            //dd($form->getData());
-            //array_push(HomeController::$questions, $form->getData());
+            // Reccuillir la requete
+            $form->handleRequest($request);
+
+            // Traiter le formulaire
+            if ($form->isSubmitted() && $form->isValid()) {
+                //dd($form->getData());
+                //array_push(HomeController::$questions, $form->getData());
+            }
+            // Rendre la vue du formulaire
+            return $this->render('question/index.html.twig', [
+                'askForm' => $form->createView()
+            ]);
         }
-        // Rendre la vue du formulaire
-        return $this->render('question/index.html.twig', [
-            'askForm' => $form->createView()
-        ]);
+
+        if (is_numeric($param)) {
+            return $this->render('detailledQuestion.html.twig', ["question" => (HomeController::$questions[$param])]);
+        }
     }
 }
