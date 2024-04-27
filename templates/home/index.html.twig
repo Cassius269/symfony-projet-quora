@@ -88,7 +88,7 @@
 							<div class="content">
 								<div class="Maincontent">
 									<h2>{{ question.title}}</h2>
-									<a href="{{ path('asqQuestion', {'param': question.id - 1}) }}">
+									<a href="{{ path('question_detail', {'id': question.id}) }}">
 										<p id="question">{{ question.content}}</p>
 									</a>
 									<div class="divAuthor">
