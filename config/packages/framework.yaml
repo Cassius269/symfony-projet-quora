@@ -1,16 +1,26 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
-    secret: '%env(APP_SECRET)%'
-    #csrf_protection: true
+  secret: "%env(APP_SECRET)%"
+  #csrf_protection: true
+  default_locale: fr
 
-    # Note that the session will be started ONLY if you read or write from it.
-    session: true
+  # Note that the session will be started ONLY if you read or write from it.
+  session:
+    handler_id: session.handler.native_file
+    save_path: "%Kernel.cache_dir%/var/sessions"
+    sid_bits_per_character: 5
+    cookie_secure: auto
+    cookie_samesite: lax
+    cookie_httponly: true
+    cookie_lifetime: 604800
+    gc_maxlifetime: 86400
+    storage_factory_id: session.storage.factory.native
 
-    #esi: true
-    #fragments: true
+  #esi: true
+  #fragments: true
 
 when@test:
-    framework:
-        test: true
-        session:
-            storage_factory_id: session.storage.factory.mock_file
+  framework:
+    test: true
+    session:
+      storage_factory_id: session.storage.factory.mock_file
