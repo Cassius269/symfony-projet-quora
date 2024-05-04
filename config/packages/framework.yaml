@@ -7,7 +7,7 @@ framework:
   # Note that the session will be started ONLY if you read or write from it.
   session:
     handler_id: session.handler.native_file
-    save_path: "%Kernel.cache_dir%/var/sessions"
+    #kernel.cache_dir: '%kernel.project_dir%/var/cache/%kernel.environment%'
     sid_bits_per_character: 5
     cookie_secure: auto
     cookie_samesite: lax
