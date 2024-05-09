@@ -38,10 +38,11 @@ body {
     margin: 2rem auto 1rem auto;
     display: grid;
     grid-template-columns: 200px minmax(300px, 300px) 1fr 200px;
-    grid-template-rows: 100px 20px 4fr 100px;
+    grid-template-rows: 100px 20px 4fr 40px 100px;
     grid-template-areas: "header header header header"
         ". . . ."
         ". aside main ."
+        ".errors errors."
         /* Les points représentent des espaces vides */
         "footer footer footer footer"
     ;
@@ -303,3 +304,23 @@ form input {
     margin-top: 50px;
 }
 
+.ulMessageError li {
+    text-align: center;
+    color: red;
+}
+
+.listMessage {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    grid-area: errors;
+    background: green;
+    height: 92px;
+    color:white;
+    padding-top: 10px;
+}
+
+.flash-success {
+    color: green;
+    font-size: 20px
+}

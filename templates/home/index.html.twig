@@ -77,13 +77,12 @@
 		{% if questions %}
 			<ul>
 				{% for question in questions %}
-					{% set totalVotes = question.upvote - question.downvote %}
 					<li>
 						<article class="articleQuestion">
 							<div class="votes">
-								<i class="fa-solid fa-arrow-up {{ totalVotes > 0 ? " positif": " "}}" alt="icône représentant les votes positifs"></i>
-								<p class={{ (totalVotes > 0 ) ? "positif" : (totalVotes != 0) ? "negatif" : ""}}>{{ totalVotes }}</p>
-								<i class="fa-solid fa-arrow-down {{ totalVotes < 0 ? " negatif" : " "}}" alt="icône représentant les votes négatifs" class="{{ totalVotes > 0 ? "positif":"negatif"}}"></i>
+								<i class="fa-solid fa-arrow-up {{ question.rating > 0 ? " positif": " "}}" alt="icône représentant les votes positifs"></i>
+								<p class={{ (question.rating > 0 ) ? "positif" : (question.rating != 0) ? "negatif" : ""}}>{{ question.rating }}</p>
+								<i class="fa-solid fa-arrow-down {{ question.rating < 0 ? " negatif" : " "}}" alt="icône représentant les votes négatifs" class="{{ question.rating > 0 ? "positif":"negatif"}}"></i>
 							</div>
 							<div class="content">
 								<div class="Maincontent">
@@ -92,9 +91,9 @@
 										<p id="question">{{ question.content}}</p>
 									</a>
 									<div class="divAuthor">
-										<img class="imageProfileAuthor" src='{{question.author.imageProfile}}' alt="image de profil">
+										<img class="imageProfileAuthor" src='https://randomuser.me/api/portraits/women/85.jpg' alt="image de profil">
 										<p style="align-content: center">Demandé par
-											<a href="#" class="author">{{ question.author.name}}</a>
+											<a href="#" class="author">Auteur</a>
 										</p>
 									</div>
 								</div>
@@ -108,9 +107,6 @@
 					</li>
 				{% endfor %}
 			</ul>
-
 		{% endif %}
-
-
 	</main>
 {% endblock %}

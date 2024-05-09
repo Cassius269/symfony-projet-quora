@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Form\QuestionType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,26 +18,36 @@ class QuestionController extends AbstractController
         path: '/ask',
         name: 'askForm'
     )]
-    public function index(Request $request): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Le repertoire de la classe Question
+        $questionRepository = $entityManager->getRepository(Question::class);
 
-        // Créer une nouvelle instance de l'objet question 
+        // Création d'une nouvelle entité question
         $question = new Question();
 
-        // Créer le formulaire
         $form = $this->createForm(QuestionType::class, $question);
 
-        // Reccuillir la requete
         $form->handleRequest($request);
 
-        // Traiter le formulaire
+        // Persister et flush à la base de donnée la question si elle est correcte à la soumission
         if ($form->isSubmitted() && $form->isValid()) {
-            //dd($form->getData());
-            //array_push(HomeController::$questions, $form->getData());
+            $searchQuestion = $questionRepository->findByTitle($question->getTitle());
+            if ($searchQuestion) {
+                $this->addFlash("erreur", "Cette question existe déjà");
+            } else {
+                $question->setCreatedAt(new \DateTimeImmutable());
+                $question->setNbrOfResponses(0);
+                $question->setRating(0);
+                $entityManager->persist($question);
+                $entityManager->flush();
+                $this->addFlash("erreur", "Votre question a été enregistrée avec succès");
+                return $this->redirectToRoute("home");
+            }
         }
-        // Rendre la vue du formulaire
-        return $this->render('question/index.html.twig', [
-            'askForm' => $form->createView()
+
+        return $this->render("question/index.html.twig", [
+            "askForm" => $form
         ]);
     }
 

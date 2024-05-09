@@ -1,3 +1,13 @@
+{# Affichage des messages flash #}
+{% if app.flashes(["success","erreur"]) %}
+	<ul class="listMessage">
+		{% for typeOfMessage,message in app.flashes(["success","erreur"]) %}
+			{% for flashMessage in message %}
+				<li class="flash-{{typeOfMessage}}">{{flashMessage}}</li>
+			{% endfor %}
+		{% endfor %}
+	</ul>
+{% endif %}
 <footer>
 	<p>copyright © 2024</p>
 </footer>
