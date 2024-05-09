@@ -352,5 +352,8 @@ form input {
 
 .paragrapheQuestionDetail {
     border-bottom: 1px solid #dbdbdb;
-  padding-bottom: 4rem;
+    padding-bottom: 4rem;
+    line-height: 30px;
+    white-space: preserve-breaks;
+    font-size: 21px;
 }

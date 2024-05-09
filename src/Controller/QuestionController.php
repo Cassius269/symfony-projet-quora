@@ -55,15 +55,12 @@ class QuestionController extends AbstractController
         path: '/{id}',
         name: 'detail'
     )]
-    public function showQuestionDetail(int $id, EntityManagerInterface $entityManager)
+    public function showQuestionDetail(Question $question)
     {
-        $questionRepository = $entityManager->getRepository(Question::class);
+        //$questionRepository = $entityManager->getRepository(Question::class);
 
-        $question = $questionRepository->find($id);
+        // $question = $questionRepository->find($id);
 
-        if (!$question) {
-            throw $this->createNotFoundException('L\'ID entré est invalide et indispobible dans le tableau des questions');
-        }
 
         return $this->render('question/detailledQuestion.html.twig', ["question" => $question]);
     }
