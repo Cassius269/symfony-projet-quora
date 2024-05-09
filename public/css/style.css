@@ -314,13 +314,13 @@ form input {
     justify-content: center;
     margin-bottom: 40px;
     grid-area: errors;
-    background: green;
+    background: rgb(210, 197, 83);
     height: 92px;
     color:white;
     padding-top: 10px;
 }
 
 .flash-success {
-    color: green;
+    color: black;
     font-size: 20px
 }
