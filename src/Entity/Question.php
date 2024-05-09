@@ -2,59 +2,47 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\QuestionRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
 {
-    #[Assert\NotBlank(message: 'La thématique de la question ne peut pas être vide')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[
-        Assert\Length(
-            min: 3,
-            max: 100,
-            minMessage: 'Entrer plus de 3 caractères',
-            maxMessage: 'Entrer moins de 100 caractères'
-        )
-    ]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
-
-    /**
-     * Get the value of subject
-     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Set the value of subjet
-     *
-     * @return  self
-     */
-    public function setTitle($title): self
+    public function setTitle(string $title): static
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get the value of content
-     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
-    /**
-     * Set the value of content
-     *
-     * @return  self
-     */
-    public function setContent($content): self
+    public function setContent(string $content): static
     {
         $this->content = $content;
 
