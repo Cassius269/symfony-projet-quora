@@ -59,12 +59,7 @@ h5 {
     color: var(--color-dark);
 }
 
-h1:hover {
-    background-color: bisque;
-
-}
-
-h1 {
+.titleHomePage {
     margin: 2rem 1rem;
     padding: 1rem;
 }
@@ -323,4 +318,39 @@ form input {
 .flash-success {
     color: black;
     font-size: 20px
+}
+
+.questionDetail {
+    max-width: 84.5%;
+    margin-left: 0px;
+    background: rgb(246, 244, 241);
+    padding: 30px;
+    box-shadow: rgba(0, 0, 0, 0.18) 0 2px 4px;
+  }
+
+ .spanQuestion {
+    background: #3CBDBB;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 4px;  
+ }
+
+ .divTitreQuestion {
+    display: flex;
+  justify-content: space-between;
+ }
+
+ .imageProfileAuthor {
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 7px;
+}
+
+.titleQuestionDetail {
+    margin-bottom: 2rem;
+}
+
+.paragrapheQuestionDetail {
+    border-bottom: 1px solid #dbdbdb;
+  padding-bottom: 4rem;
 }

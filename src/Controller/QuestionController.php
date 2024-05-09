@@ -55,22 +55,16 @@ class QuestionController extends AbstractController
         path: '/{id}',
         name: 'detail'
     )]
-    public function showQuestionDetail(int $id)
+    public function showQuestionDetail(int $id, EntityManagerInterface $entityManager)
     {
-        // stocker la variable question 
-        $questions = HomeController::$questions;
+        $questionRepository = $entityManager->getRepository(Question::class);
 
-        // verifier si le paramètre numérique entré appartient au tableau des questions
-        $questionsById = array_column($questions, 'id');
+        $question = $questionRepository->find($id);
 
-        $result = in_array($id, $questionsById, $strict = true);
-
-        // Si ok retourner la vue de la question en détail
-        // sinon rediriger l'utilisateur avec un code d'erreur 404
-        //dd($questions[$id]]);
-        if ($result != true) {
+        if (!$question) {
             throw $this->createNotFoundException('L\'ID entré est invalide et indispobible dans le tableau des questions');
         }
-        return $this->render('question/detailledQuestion.html.twig', ["question" => $questions[$id - 1]]);
+
+        return $this->render('question/detailledQuestion.html.twig', ["question" => $question]);
     }
 }
