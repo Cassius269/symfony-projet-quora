@@ -395,7 +395,7 @@ gap:15px
   margin-bottom:1rem
 }
 
-.divArticleComment p, .divArticleComment h3{
+.divArticleComment p, .divArticleComment a{
     align-content: center;
 }
 
