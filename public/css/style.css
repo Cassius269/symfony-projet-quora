@@ -376,6 +376,11 @@ display: flex;
 gap:15px
 }
 
+.nomPlusImage h3{
+    color: #3CBDBB;
+
+}
+
 .articleCommentaire {
     max-width: 84.6%;
     margin: 10px 0 10px 0;
@@ -393,3 +398,4 @@ gap:15px
 .divArticleComment p, .divArticleComment h3{
     align-content: center;
 }
+

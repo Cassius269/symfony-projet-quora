@@ -100,13 +100,9 @@ class QuestionController extends AbstractController
             );
         }
 
-        // Recupérer toutes les réponses de la question à l'id indiqué en URL
-        $comments = $question->getComments();
-
         return $this->render('question/detailledQuestion.html.twig', [
             "question" => $question,
             "commentForm" => $form->createView(),
-            "comments" => $comments
         ]);
     }
 }

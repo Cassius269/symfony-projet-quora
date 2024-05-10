@@ -14,13 +14,13 @@
 				</div>
 				<p class="paragrapheQuestionDetail">{{question.content }}
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
-																																																																																																																																																																			Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
+																																																																																																																																																																								Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
 				</p>
 				{{form(commentForm)}}
 				</article>
 			</section>
 			<section>
-				{% for comment in comments %}
+				{% for comment in question.comments %}
 					<article class="articleCommentaire">
 						<div class="divArticleComment">
 							<div class="nomPlusImage">
