@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Question;
+use App\Form\CommentType;
 use App\Form\QuestionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,13 +57,28 @@ class QuestionController extends AbstractController
         path: '/{id}',
         name: 'detail'
     )]
-    public function showQuestionDetail(Question $question)
+    public function showQuestionDetail(Question $question, Request $request, EntityManagerInterface $em): Response
     {
         //$questionRepository = $entityManager->getRepository(Question::class);
 
         // $question = $questionRepository->find($id);
+        $comment = new Comment();
 
+        $form = $this->createForm(CommentType::class, $comment);
 
-        return $this->render('question/detailledQuestion.html.twig', ["question" => $question]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setQuestion($question);
+            //dd($comment);
+
+            $em->persist($comment);
+            $em->flush();
+        }
+
+        return $this->render('question/detailledQuestion.html.twig', [
+            "question" => $question,
+            "commentForm" => $form->createView()
+        ]);
     }
 }

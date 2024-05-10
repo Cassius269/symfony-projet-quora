@@ -357,3 +357,14 @@ form input {
     white-space: preserve-breaks;
     font-size: 21px;
 }
+
+#comment_content {
+    width: 54.5vw;
+    margin-bottom:1rem;
+}
+
+#comment_submit {
+    background: var(--couleurPrimaire);
+  border: none;
+  color: white;
+}
