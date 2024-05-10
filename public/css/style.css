@@ -370,3 +370,26 @@ form input {
   border: none;
   color: white;
 }
+
+.nomPlusImage {
+display: flex;
+gap:15px
+}
+
+.articleCommentaire {
+    max-width: 84.6%;
+    margin: 10px 0 10px 0;
+    background-color: rgb(247, 247, 247);    
+    padding: 1.4rem;
+    border-radius: 5px;
+}
+
+.divArticleComment {
+    display: flex;
+  justify-content: space-between;
+  margin-bottom:1rem
+}
+
+.divArticleComment p, .divArticleComment h3{
+    align-content: center;
+}

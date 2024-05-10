@@ -61,15 +61,18 @@ class QuestionController extends AbstractController
     )]
     public function showQuestionDetail(Question $question, Request $request, EntityManagerInterface $em): Response
     {
+        // Récuperer le repértoire des réponses
         $commentRepository = $em->getRepository(comment::class);
 
-        // $question = $questionRepository->find($id);
+        //Créeer le formulaire
         $comment = new Comment();
 
         $form = $this->createForm(CommentType::class, $comment);
 
+        // Récueillir la requête 
         $form->handleRequest($request);
 
+        // Verifier les données soumis à la réception du formulaire et envoyer les données à la BDD si ok
         if ($form->isSubmitted() && $form->isValid()) { // dans le cas où le formulaire est dsoumis et valide face aux contraintes
             $content = $comment->getContent();
 
@@ -97,9 +100,13 @@ class QuestionController extends AbstractController
             );
         }
 
+        // Recupérer toutes les réponses de la question à l'id indiqué en URL
+        $comments = $question->getComments();
+
         return $this->render('question/detailledQuestion.html.twig', [
             "question" => $question,
-            "commentForm" => $form->createView()
+            "commentForm" => $form->createView(),
+            "comments" => $comments
         ]);
     }
 }

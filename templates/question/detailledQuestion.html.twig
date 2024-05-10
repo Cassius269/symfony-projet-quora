@@ -4,18 +4,36 @@
 {% endblock %}
 {% block body %}
 	<main>
-		<article class="questionDetail">
-			<div class="divTitreQuestion">
-				<h1 class="titleQuestionDetail">{{ question.title}}
-					<span class="spanQuestion">Question</span>
-				</h1>
-				<img class="imageProfileAuthor" src="https://randomuser.me/api/portraits/women/85.jpg" alt="photographie de l'auteur de la question">
-			</div>
-			<p class="paragrapheQuestionDetail">{{question.content }}
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
-																							Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
-			</p>
-			{{form(commentForm)}}
-			</article>
+		<section>
+			<article class="questionDetail">
+				<div class="divTitreQuestion">
+					<h1 class="titleQuestionDetail">{{ question.title}}
+						<span class="spanQuestion">Question</span>
+					</h1>
+					<img class="imageProfileAuthor" src="https://randomuser.me/api/portraits/women/85.jpg" alt="photographie de l'auteur de la question">
+				</div>
+				<p class="paragrapheQuestionDetail">{{question.content }}
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
+																																																																																																																																																																			Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
+				</p>
+				{{form(commentForm)}}
+				</article>
+			</section>
+			<section>
+				{% for comment in comments %}
+					<article class="articleCommentaire">
+						<div class="divArticleComment">
+							<div class="nomPlusImage">
+								<h3>Nom et prenom</h2>
+								<img class="imageProfileAuthor" src="https://randomuser.me/api/portraits/women/85.jpg" alt="image photographie représentant un utilisateur">
+							</div>
+							<p>{{ comment.createdAt | format_date('full',locale='fr')}}</p>
+						</div>
+
+						<p>{{comment.content}}</p>
+					</article>
+				{% endfor %}
+			</section>
+
 		</main>
 	{% endblock %}
