@@ -80,20 +80,21 @@ class QuestionController extends AbstractController
             if ($commentBDD) { // dans le cas où une question similaire montrer un message flash et relancer la page
                 $this->addFlash("erreur", "Une réponse similaire existe sur cette question");
 
-                return $this->redirectToRoute("question_detail", [
-                    "id" => $question->getId()
-                ]);
+                return $this->redirect(
+                    $request->getUri()
+                );
             }
 
             $comment->setCreatedAt(new \DateTimeImmutable());
             $comment->setQuestion($question);
+            $comment->setRating(0);
             $em->persist($comment);
             $em->flush();
 
             $this->addFlash("success", "Votre réponse a été ajoutée avec succès");
-            return $this->redirectToRoute("question_detail", [
-                "id" => $question->getId()
-            ]);
+            return $this->redirect(
+                $request->getUri()
+            );
         }
 
         return $this->render('question/detailledQuestion.html.twig', [
