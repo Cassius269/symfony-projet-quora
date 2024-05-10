@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use function PHPUnit\Framework\isEmpty;
+
 #[Route(path: '/question', name: 'question_')]
 class QuestionController extends AbstractController
 {
@@ -59,7 +61,7 @@ class QuestionController extends AbstractController
     )]
     public function showQuestionDetail(Question $question, Request $request, EntityManagerInterface $em): Response
     {
-        //$questionRepository = $entityManager->getRepository(Question::class);
+        $commentRepository = $em->getRepository(comment::class);
 
         // $question = $questionRepository->find($id);
         $comment = new Comment();
@@ -68,12 +70,30 @@ class QuestionController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setQuestion($question);
-            //dd($comment);
+        if ($form->isSubmitted() && $form->isValid()) { // dans le cas où le formulaire est dsoumis et valide face aux contraintes
+            $content = $comment->getContent();
 
+            $commentBDD = $commentRepository->findOneBy([
+                "content" => $content
+            ]);
+
+            if ($commentBDD) { // dans le cas où une question similaire montrer un message flash et relancer la page
+                $this->addFlash("erreur", "Une réponse similaire existe sur cette question");
+
+                return $this->redirectToRoute("question_detail", [
+                    "id" => $question->getId()
+                ]);
+            }
+
+            $comment->setCreatedAt(new \DateTimeImmutable());
+            $comment->setQuestion($question);
             $em->persist($comment);
             $em->flush();
+
+            $this->addFlash("success", "Votre réponse a été ajoutée avec succès");
+            return $this->redirectToRoute("question_detail", [
+                "id" => $question->getId()
+            ]);
         }
 
         return $this->render('question/detailledQuestion.html.twig', [

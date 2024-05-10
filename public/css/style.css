@@ -356,11 +356,13 @@ form input {
     line-height: 30px;
     white-space: preserve-breaks;
     font-size: 21px;
+    margin-bottom: 2rem;
 }
 
 #comment_content {
     width: 54.5vw;
     margin-bottom:1rem;
+    margin-top: 1rem;
 }
 
 #comment_submit {
