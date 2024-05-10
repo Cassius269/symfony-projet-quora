@@ -19,7 +19,9 @@ class CommentType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => 'Votre réponse'
             ])
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => "Répondre"
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
