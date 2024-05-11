@@ -19,7 +19,7 @@
 				</div>
 				<p class="paragrapheQuestionDetail">{{question.content }}
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
-																																																																																																																																																																																																																																																																																																																																																																																										Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
+																																																																																																																																																																																																																																																																																																																																																																																																																																							Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
 				</p>
 				{{form(commentForm)}}
 				</article>
@@ -37,7 +37,7 @@
 									</a>
 									<img class="imageProfileAuthor" src="https://randomuser.me/api/portraits/women/85.jpg" alt="image photographie représentant un utilisateur">
 								</div>
-								<p>{{ comment.createdAt | time_diff(locale='fr')}}</p>
+								<p>{{ comment.createdAt | ago(locale='fr')}}</p>
 							</div>
 
 							<p>{{comment.content}}</p>
