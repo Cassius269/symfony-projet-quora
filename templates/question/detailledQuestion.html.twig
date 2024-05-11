@@ -14,7 +14,7 @@
 				</div>
 				<p class="paragrapheQuestionDetail">{{question.content }}
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
-																																																																																																																																																																																							Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
+																																																																																																																																																																																																																															Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
 				</p>
 				{{form(commentForm)}}
 				</article>
@@ -22,17 +22,26 @@
 			<section>
 				{% for comment in question.comments %}
 					<article class="articleCommentaire">
-						<div class="divArticleComment">
-							<div class="nomPlusImage">
-								<a href="#" title="page de profil de l'auteur de la réponsee">
-									<h3>Nom et prenom</h2>
-								</a>
-								<img class="imageProfileAuthor" src="https://randomuser.me/api/portraits/women/85.jpg" alt="image photographie représentant un utilisateur">
+						<div class="votes">
+							<i class="fa-solid fa-arrow-up {{ question.rating > 0 ? " positif": " "}}" alt="icône représentant les votes positifs"></i>
+							<p class={{ (question.rating > 0 ) ? "positif" : (question.rating != 0) ? "negatif" : ""}}>{{ question.rating }}</p>
+							<i class="fa-solid fa-arrow-down {{ question.rating < 0 ? " negatif" : " "}}" alt="icône représentant les votes négatifs" class="{{ question.rating > 0 ? "positif":"negatif"}}"></i>
+						</div>
+						<div class="divCommentPlusImagePlusCreatedAtPlusContent">
+							<div class="divArticleComment">
+								<div class="nomPlusImage">
+
+									<a href="#" title="page de profil de l'auteur de la réponsee">
+										<h3>Nom et prenom</h2>
+									</a>
+									<img class="imageProfileAuthor" src="https://randomuser.me/api/portraits/women/85.jpg" alt="image photographie représentant un utilisateur">
+								</div>
+								<p>{{ comment.createdAt | format_date('full',locale='fr')}}</p>
 							</div>
-							<p>{{ comment.createdAt | format_date('full',locale='fr')}}</p>
+
+							<p>{{comment.content}}</p>
 						</div>
 
-						<p>{{comment.content}}</p>
 					</article>
 				{% endfor %}
 			</section>

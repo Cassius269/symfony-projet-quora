@@ -98,7 +98,7 @@
 
 								<div class="mainArticleDivResponse">
 									<img src="{{ asset('icons/responses.svg')}}" alt="logo reponses">
-									<p class="nbreOfResponse">{{ question.nbrOfResponses }}</p>
+									<p class="nbreOfResponse">{{ question.getComments | length }}</p>
 								</div>
 							</div>
 						</article>

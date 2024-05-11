@@ -387,6 +387,8 @@ gap:15px
     background-color: rgb(247, 247, 247);    
     padding: 1.4rem;
     border-radius: 5px;
+    display: flex;
+  justify-content: space-between;
 }
 
 .divArticleComment {
@@ -399,3 +401,22 @@ gap:15px
     align-content: center;
 }
 
+#comment_content {
+    width: 50.8vw;
+}
+
+.articleCommentaire .votes {
+position: relative;
+  bottom: 0.7rem;
+}
+
+
+.divCommentPlusImagePlusCreatedAtPlusContent {
+    flex: 1;
+  margin-left: 1.5rem;
+
+}
+
+.votes p {
+    text-align: center;
+}
