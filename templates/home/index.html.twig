@@ -58,14 +58,6 @@
 		.author {
 			color: rgb(37, 150, 190);
 		}
-
-		.negatif {
-			color: red;
-		}
-
-		.positif {
-			color: #40A2E3;
-		}
 	</style>
 	<main>
 		<h1 class="titleHomePage">Liste des questions</h1>
@@ -77,11 +69,7 @@
 				{% for question in questions %}
 					<li>
 						<article class="articleQuestion">
-							<div class="votes">
-								<i class="fa-solid fa-arrow-up {{ question.rating > 0 ? " positif": " "}}" alt="icône représentant les votes positifs"></i>
-								<p class={{ (question.rating > 0 ) ? "positif" : (question.rating != 0) ? "negatif" : ""}}>{{ question.rating }}</p>
-								<i class="fa-solid fa-arrow-down {{ question.rating < 0 ? " negatif" : " "}}" alt="icône représentant les votes négatifs" class="{{ question.rating > 0 ? "positif":"negatif"}}"></i>
-							</div>
+							{% include "partials/_votes.html.twig" with {rating: question.rating, from:'question',id:question.id } %}
 							<div class="content">
 								<div class="Maincontent">
 									<h2>{{ question.title}}</h2>

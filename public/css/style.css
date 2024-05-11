@@ -343,11 +343,12 @@ form input {
  .imageProfileAuthor {
     height: 35px;
     border-radius: 50%;
-    margin-right: 7px;
+    margin-top: 1.1rem 7px 0 0;
 }
 
 .titleQuestionDetail {
-    margin-bottom: 2rem;
+    margin-top: 1.1rem;
+    margin-left:1rem;
 }
 
 .paragrapheQuestionDetail {
@@ -356,7 +357,7 @@ form input {
     line-height: 30px;
     white-space: preserve-breaks;
     font-size: 21px;
-    margin-bottom: 2rem;
+    margin: 1.3rem 0 2rem 0;
 }
 
 #comment_content {
@@ -419,4 +420,23 @@ position: relative;
 
 .votes p {
     text-align: center;
+}
+
+
+.negatif {
+    color: red;
+}
+
+.positif {
+    color: #40A2E3;
+}
+
+.votesQuestionPageDetail{
+  position: relative;
+  bottom: 1rem;
+  margin-right: 1rem;
+}
+
+.divTitreQuestion .imageProfileAuthor {
+    margin-top: 1.1rem;
 }

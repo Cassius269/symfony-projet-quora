@@ -1,0 +1,9 @@
+<div class="votes">
+	<a href="{{path(from ~ '_rating',{id:id, score:1})}}">
+		<i class="fa-solid fa-arrow-up {{ rating > 0 ? " positif": " "}}" alt="icône représentant les votes positifs"></i>
+	</a>
+	<p class={{ (rating > 0 ) ? "positif" : (rating != 0) ? "negatif" : ""}}>{{rating }}</p>
+	<a href="{{path(from ~ '_rating',{id:id, score:-1})}}">
+		<i class="fa-solid fa-arrow-down {{rating < 0 ? " negatif" : " "}}" alt="icône représentant les votes négatifs" class="{{ rating > 0 ? "positif":"negatif"}}"></i>
+	</a>
+</div>

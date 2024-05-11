@@ -15,12 +15,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use function PHPUnit\Framework\isEmpty;
 
-#[Route(path: '/question', name: 'question_')]
 class QuestionController extends AbstractController
 {
     #[Route(
-        path: '/ask',
-        name: 'askForm'
+        path: '/question/ask',
+        name: 'question_askForm'
     )]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -56,8 +55,8 @@ class QuestionController extends AbstractController
     }
 
     #[Route(
-        path: '/{id}',
-        name: 'detail'
+        path: '/question/{id}',
+        name: 'question_detail'
     )]
     public function showQuestionDetail(Question $question, Request $request, EntityManagerInterface $em): Response
     {
@@ -104,5 +103,23 @@ class QuestionController extends AbstractController
             "question" => $question,
             "commentForm" => $form->createView(),
         ]);
+    }
+
+    #[Route(path: "question/rating/{id}/{score}", name: 'question_rating')]
+    public function ratingQuestion(Question $question, int $score, EntityManagerInterface $em, Request $request): response
+    {
+        $question->setRating($question->getRating() + $score);
+        $referer = $request->server->get('HTTP_REFERER'); // $referer fait réferrence à l'URL de la requête précédente, en gros la page d'avant
+        $em->flush();
+        return $referer ?  $this->redirect($referer) : $this->redirectToRoute('home');
+    }
+
+    #[Route(path: "comment/rating/{id}/{score}", name: 'comment_rating')]
+    public function ratingComment(Comment $comment, int $score, EntityManagerInterface $em, Request $request): response
+    {
+        $comment->setRating($comment->getRating() + $score);
+        $referer = $request->server->get('HTTP_REFERER');
+        $em->flush();
+        return $referer ?  $this->redirect($referer) : $this->redirectToRoute('home');
     }
 }
