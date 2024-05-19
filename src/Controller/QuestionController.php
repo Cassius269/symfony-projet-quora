@@ -79,7 +79,7 @@ class QuestionController extends AbstractController
                 "content" => $content
             ]);
 
-            if ($commentBDD) { // dans le cas où une question similaire montrer un message flash et relancer la page
+            if ($commentBDD) { // dans le cas où une question similaire existe, montrer un message flash et relancer la page
                 $this->addFlash("erreur", "Une réponse similaire existe sur cette question");
 
                 return $this->redirect(
