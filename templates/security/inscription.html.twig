@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SecurityController!
+{% endblock %}
+
+{% block body %}
+	<style>
+		form {
+			margin: auto auto 4rem;
+			padding: 2rem;
+			border-radius: var(--border-radius);
+			box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
+		}
+
+		form div {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem
+		}
+
+		form button {
+			width: 100px;
+			margin-top: 3rem;
+		}
+	</style>
+	<main>
+		<h1>Inscrivez-vous</h1>
+		{{form(form)}}
+		</main>
+	{% endblock %}
