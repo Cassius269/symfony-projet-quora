@@ -12,9 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use function PHPUnit\Framework\isEmpty;
 
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class QuestionController extends AbstractController
 {
     #[Route(
@@ -42,6 +44,7 @@ class QuestionController extends AbstractController
                 $question->setCreatedAt(new \DateTimeImmutable());
                 $question->setNbrOfResponses(0);
                 $question->setRating(0);
+                $question->setUser($this->getUser());
                 $entityManager->persist($question);
                 $entityManager->flush();
                 $this->addFlash("erreur", "Votre question a été enregistrée avec succès");
