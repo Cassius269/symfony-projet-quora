@@ -5,7 +5,7 @@
 		<input type="submit" id="searchButton" value="">
 	</form>
 	<div>
-		{% if  is_granted('IS_AUTHENTICATED_FULLY') %}
+		{% if  is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 			<a href="{{path('logout')}}">
 				<button>Déconnexion</button>
 			</a>

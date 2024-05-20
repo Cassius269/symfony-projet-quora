@@ -21,6 +21,9 @@
 			<label for="password">Mot de passe</label><input type="password" id="password" name="_password">
 			<input type="submit">
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<label>
+			<input type="checkbox" name="_remember_me"> Se souvenir de moi
+			</label>
 		</form>
 	</main>
 {% endblock %}

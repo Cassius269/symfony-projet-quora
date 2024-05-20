@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 class CommentController extends AbstractController
 {
     #[Route('{id}/comments', name: 'commentsOfUser')]

@@ -15,6 +15,9 @@ security:
       security: false
     main:
       lazy: true
+      remember_me:
+        secret: '%kernel.secret%'
+        always_remember_me: true
       provider: app_user_provider
       login_throttling:
         max_attempts: 3
