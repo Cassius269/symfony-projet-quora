@@ -23,17 +23,26 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $profilImage ='https://randomuser.me/api/portraits/men/'.rand(1,99).'.jpg';
+            $nameFile = ($user->getFirstName()). ($user->getLastName());
+           $file = $form['imageProfile']->getData();
+
+        
+           if($file->getMimeType() === "image/jpeg"){
+            $file->move('images', $nameFile.'.jpeg');
             $plainTextpassword = $user->getPassword();
             $user->setPassword($passwordHasher->hashPassword($user, $plainTextpassword));
 
             $user->setCreatedAt(new \DateTimeImmutable());
             $user->setRoles(['ROLE_USER']);
 
-           $user->setImageProfile($profilImage);
+           $user->setImageProfile('images/'.$nameFile.'.jpeg');
             $em->persist($user);
             $em->flush();
             $this->addFlash('success', 'Vous avez été enregistré');
+           }else {
+            $this->addFlash('error',"L'image n'est pas sous format JPEG");
+           }
+
         } else {
             dump('pas ok');
             $this->addFlash('error', 'Vous n\avez pas été enregistré');
