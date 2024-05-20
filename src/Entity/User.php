@@ -20,7 +20,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Assert\Email(message: 'Le champ mail n\'est pas correct')]
+    #[Assert\Email(message: 'Veuillez un email correct')]
+    #[Asser\NotBlank(message: 'Veuillez renseigner votre email')]
     private ?string $email = null;
 
     /**
@@ -33,20 +34,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(
+        min:8,
+        minMessage:'Le mot de passe doit faire 8 caractères au moins'
+    )]
+    #[Assert\NotBlank(message:'Veuillez renseigner votre mot de passe')]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(
-        min:3,
-        minMessage: 'Le prénom saisi est trop court'
-    )]
+    #[Assert\NotBlank(message:'Veuillez renseigner votre prénom')]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(
-        min:3,
-        minMessage: 'Le nom saisi est trop court'
-    )]
+    #[Assert\NotBlank(message:'Veuillez renseigner votre nom de famille')]
     private ?string $lastname = null;
 
     /**
@@ -68,6 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    
     private ?string $imageProfile = null;
 
     public function __construct()

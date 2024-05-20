@@ -31,7 +31,7 @@ class UserType extends AbstractType
                 'required' => true,
                 'attr'=> [
                     'accept' => 'images/*'
-                ]
+                ],
             ])
             ->add('submit', SubmitType::class);
     }

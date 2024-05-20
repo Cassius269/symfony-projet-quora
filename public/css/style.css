@@ -311,14 +311,26 @@ form input {
     justify-content: center;
     margin-bottom: 40px;
     grid-area: errors;
-    background: rgb(210, 197, 83);
     height: 92px;
-    color:white;
     padding-top: 10px;
 }
 
+.listMessage  li {
+  width: 90%;
+  margin-left: auto;
+  text-align: center;
+  padding-top: 5px;
+}
+
 .flash-success {
-    color: black;
+    background-color: rgb(220, 158, 23);
+    color: white;
+    font-size: 20px
+}
+
+.flash-error {
+    background-color: red;
+    color: white;
     font-size: 20px
 }
 
@@ -497,3 +509,9 @@ position: relative;
 .author {
     color: rgb(37, 150, 190);
 }
+
+/* Coloration des erreurs de formulaire en rouge */
+form li {
+    color:red
+}
+
