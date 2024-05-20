@@ -20,7 +20,7 @@
 							<span class="spanQuestion">Question</span>
 						</h1>
 					</div>
-					<img class="imageProfileAuthor" src="https://randomuser.me/api/portraits/women/85.jpg" alt="photographie de l'auteur de la question">
+					<img class="imageProfileAuthor" src='{{asset(question.user.imageProfile)}}' alt="photographie de l'auteur de la question">
 				</div>
 				<p class="paragrapheQuestionDetail">{{question.content }}
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
@@ -42,7 +42,7 @@
 											{{question.user.firstname}}
 										</h3>
 									</a>
-									<img class="imageProfileAuthor" src="https://randomuser.me/api/portraits/women/85.jpg" alt="image photographie représentant un utilisateur">
+									<img class="imageProfileAuthor" src='{{asset(comment.user.imageProfile)}}' alt="image photographie représentant un utilisateur">
 								</div>
 								<p>{{ comment.createdAt | ago(locale='fr')}}</p>
 							</div>

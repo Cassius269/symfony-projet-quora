@@ -1,6 +1,6 @@
 {# Affichage des messages flash #}
 <ul class="listMessage">
-	{% for typeOfMessage,message in app.flashes(["success","erreur"]) %}
+	{% for typeOfMessage,message in app.flashes(["success","error"]) %}
 		{% for flashMessage in message %}
 			<li class="flash-{{typeOfMessage}}">{{flashMessage}}</li>
 		{% endfor %}
