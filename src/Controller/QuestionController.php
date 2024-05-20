@@ -80,7 +80,8 @@ class QuestionController extends AbstractController
             $content = $comment->getContent();
 
             $commentBDD = $commentRepository->findOneBy([
-                "content" => $content
+                "content" => $content,
+                "question" => $question->getId()
             ]);
 
             if ($commentBDD) { // dans le cas où une question similaire existe, montrer un message flash et relancer la page
@@ -90,7 +91,6 @@ class QuestionController extends AbstractController
                     $request->getUri()
                 );
             }
-
             $comment->setCreatedAt(new \DateTimeImmutable());
             $comment->setUser($this->getUser());
             $comment->setQuestion($question);
@@ -140,8 +140,6 @@ class QuestionController extends AbstractController
         foreach ($getQuestions as $question) {
             $questions[] = $question;
         }
-
-        dump($questions);
 
         return $this->render('question/questionsOfuser.html.twig', [
             'questions' => $questions,

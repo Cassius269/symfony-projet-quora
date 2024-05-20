@@ -4,6 +4,11 @@
 {% endblock %}
 {% block body %}
 	<main>
+
+		{% for comment in question.comments %}
+			{{comment.user.firstname}}
+		{% endfor %}
+
 		<section>
 			<article class="questionDetail">
 
@@ -19,7 +24,7 @@
 				</div>
 				<p class="paragrapheQuestionDetail">{{question.content }}
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																											Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
 				</p>
 				{{form(commentForm)}}
 				</article>
