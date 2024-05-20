@@ -57,6 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageProfile = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -241,6 +244,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getImageProfile(): ?string
+    {
+        return $this->imageProfile;
+    }
+
+    public function setImageProfile(?string $imageProfile): static
+    {
+        $this->imageProfile = $imageProfile;
 
         return $this;
     }
