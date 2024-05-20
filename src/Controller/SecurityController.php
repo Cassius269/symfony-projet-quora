@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
            $file = $form['imageProfile']->getData();
 
         
-           if($file->getMimeType() === "image/jpeg"){
+           if($file->getMimeType() === "image/*"){
             $file->move('images', $nameFile.'.jpeg');
             $plainTextpassword = $user->getPassword();
             $user->setPassword($passwordHasher->hashPassword($user, $plainTextpassword));
@@ -40,7 +40,7 @@ class SecurityController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Vous avez été enregistré');
            }else {
-            $this->addFlash('error',"L'image n'est pas sous format JPEG");
+            $this->addFlash('error',"Le fichier n'est pas au bon format : choisissez par exemple JPEG, JPEG");
            }
 
         } else {
