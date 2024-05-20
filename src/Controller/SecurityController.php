@@ -56,6 +56,10 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'login')]
     public function connect(AuthenticationUtils $authenticationUtils): Response
     {
+        if($this->getUser()){
+            return $this->redirectToRoute('home');
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $username = $authenticationUtils->getLastUsername();
 
