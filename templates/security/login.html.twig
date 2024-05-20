@@ -20,7 +20,7 @@
 			<label for="username">Email</label><input type="email" id="email" name="_username">
 			<label for="password">Mot de passe</label><input type="password" id="password" name="_password">
 			<input type="submit">
-
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 		</form>
 	</main>
 {% endblock %}
