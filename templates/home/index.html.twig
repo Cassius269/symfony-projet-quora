@@ -18,7 +18,7 @@
 										<p id="question">{{ question.content}}</p>
 									</a>
 									<div class="divAuthor">
-										<img class="imageProfileAuthor" src='https://randomuser.me/api/portraits/women/85.jpg' alt="image de profil">
+										<img class="imageProfileAuthor" src='{{question.user.imageProfile ?? null}}' alt="image de profil">
 										<p style="align-content: center">Demandé par
 											<a href="#" class="author">{{question.user.lastname}}
 												{{question.user.firstname}}</a>

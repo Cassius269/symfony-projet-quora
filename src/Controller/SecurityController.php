@@ -23,12 +23,14 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $profilImage ='https://randomuser.me/api/portraits/men/'.rand(1,99).'.jpg';
             $plainTextpassword = $user->getPassword();
             $user->setPassword($passwordHasher->hashPassword($user, $plainTextpassword));
 
             $user->setCreatedAt(new \DateTimeImmutable());
             $user->setRoles(['ROLE_USER']);
 
+           $user->setImageProfile($profilImage);
             $em->persist($user);
             $em->flush();
             $this->addFlash('success', 'Vous avez été enregistré');
