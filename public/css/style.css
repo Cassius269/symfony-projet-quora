@@ -126,7 +126,9 @@ main {
     min-width: 400px;
 }
 
-
+h1 {
+    text-align: center;
+}
 
 /* stylisation des boutons */
 
@@ -321,7 +323,6 @@ form input {
 }
 
 .questionDetail {
-    max-width: 84.5%;
     margin-left: 0px;
     background: rgb(246, 244, 241);
     padding: 30px;
@@ -383,7 +384,6 @@ gap:15px
 }
 
 .articleCommentaire {
-    max-width: 84.6%;
     margin: 10px 0 10px 0;
     background-color: rgb(247, 247, 247);    
     padding: 1.4rem;
@@ -439,4 +439,61 @@ position: relative;
 
 .divTitreQuestion .imageProfileAuthor {
     margin-top: 1.1rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    min-width: 90%;
+}
+
+.votes {
+    min-width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.articleQuestion {
+    display: flex;
+    padding: 40px;
+    background: white;
+    background: #FEFBF6;
+    box-shadow: rgba(0, 0, 0, 0.18) 0 2px 4px;
+    margin-bottom: 2rem;
+}
+
+.articleQuestion:active {
+    box-shadow: rgba(0, 0, 0, 0.08) 0 4px 12px;
+}
+
+.mainArticleDivResponse {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mainArticleDivResponse p {
+    margin-right: 1rem;
+}
+
+#question {
+    margin: 2rem 0;
+    padding: 0 0 50px;
+    border-bottom: 1px solid #d9d9d9;
+    cursor: pointer;
+    font-size: 18px
+}
+
+.divAuthor {
+    display: flex;
+}
+
+
+.nbreOfResponse {
+    margin-left: 10px;
+    align-content: center;
+}
+
+.author {
+    color: rgb(37, 150, 190);
 }

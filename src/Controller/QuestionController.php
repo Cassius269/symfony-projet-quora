@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Question;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\QuestionType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -91,6 +92,7 @@ class QuestionController extends AbstractController
             }
 
             $comment->setCreatedAt(new \DateTimeImmutable());
+            $comment->setUser($this->getUser());
             $comment->setQuestion($question);
             $comment->setRating(0);
             $em->persist($comment);
@@ -124,5 +126,25 @@ class QuestionController extends AbstractController
         $referer = $request->server->get('HTTP_REFERER');
         $em->flush();
         return $referer ?  $this->redirect($referer) : $this->redirectToRoute('home');
+    }
+
+
+    #[Route(
+        path: '{id}/questions',
+        name: 'userQuestions'
+    )]
+    public function showQuestionsOfUser(User $user): Response
+    {
+        $getQuestions = $user->getQuestions();
+        $questions = [];
+        foreach ($getQuestions as $question) {
+            $questions[] = $question;
+        }
+
+        dump($questions);
+
+        return $this->render('question/questionsOfuser.html.twig', [
+            'questions' => $questions,
+        ]);
     }
 }

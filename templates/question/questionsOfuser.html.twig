@@ -1,10 +1,6 @@
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
 {% block body %}
 	<main>
-		<h1 class="titleHomePage">Liste des questions</h1>
-		<pre>
-			{{ dump(questions) }}
-		</pre>
 		{% if questions %}
 			<ul>
 				{% for question in questions %}

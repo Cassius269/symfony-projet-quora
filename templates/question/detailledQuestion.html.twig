@@ -19,7 +19,7 @@
 				</div>
 				<p class="paragrapheQuestionDetail">{{question.content }}
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
-																																																																																																																																																																																																																																																																																																																																																																																																																																							Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
 				</p>
 				{{form(commentForm)}}
 				</article>
@@ -33,7 +33,9 @@
 								<div class="nomPlusImage">
 
 									<a href="#" title="page de profil de l'auteur de la réponsee">
-										<h3>Nom et prenom</h2>
+										<h3>{{question.user.lastname}}
+											{{question.user.firstname}}
+										</h3>
 									</a>
 									<img class="imageProfileAuthor" src="https://randomuser.me/api/portraits/women/85.jpg" alt="image photographie représentant un utilisateur">
 								</div>

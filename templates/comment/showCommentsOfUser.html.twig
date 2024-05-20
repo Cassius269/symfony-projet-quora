@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommentController!
+{% endblock %}
+
+{% block body %}
+	<main>
+		{% if comments %}
+			<ul>
+				{% for comment in comments %}
+					<li>
+						<article>
+							<h2>{{comment.question.title}}</h2>
+							<p>{{comment.content}}</p>
+						</article>
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</main>
+{% endblock %}

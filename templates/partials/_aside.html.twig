@@ -1,31 +1,33 @@
 <aside>
-	<nav>
-		<ul>
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<nav>
+			<ul>
+				<li>
+					<a href="{{ path('question_askForm') }}">
+						<button id="asideButtonQuestion">
+							<img alt="logo représentant un point d'interrogation" src="{{asset("icons/question.svg")}}">Poser une question
+						</button>
+					</a>
+
+				</li>
+			</li>
 			<li>
-				<a href="{{ path('question_askForm') }}">
-					<button id="asideButtonQuestion">
-						<img alt="logo représentant un point d'interrogation" src="{{asset("icons/question.svg")}}">Poser une question
-					</button>
-				</a>
+				<button class="asideNavButton leftbarre">
+					<a href="{{ path('home')}}"><img src="{{ asset("icons/home.svg")}}" alt="" class="icon">Liste des questions
+					</a>
+				</button>
+			</li>
+			<li>
+				<button class="asideNavButton leftbarre">
+					<a href="{{path('userQuestions',{id:app.user.id})}}"><img src="{{ asset("icons/pen.svg")}}" alt="" class="icon">Mes questions</a>
+				</button>
 
 			</li>
-		</li>
-		<li>
-			<button class="asideNavButton leftbarre">
-				<a href="{{ path('home')}}"><img src="{{ asset("icons/home.svg")}}" alt="" class="icon">Liste des questions
-				</a>
-			</button>
-		</li>
-		<li>
-			<button class="asideNavButton leftbarre">
-				<a href="#"><img src="{{ asset("icons/pen.svg")}}" alt="" class="icon">Mes questions</a>
-			</button>
-
-		</li>
-		<li>
-			<button class="asideNavButton leftbarre">
-				<a href="#"><img src="{{ asset("icons/puzzle-piece.svg")}}" alt="" class="icon">Mes réponses</a>
-			</button>
-		</li>
-	</ul>
-</nav></aside>
+			<li>
+				<button class="asideNavButton leftbarre">
+					<a href="{{path('commentsOfUser',{id:app.user.id})}}"><img src="{{ asset("icons/puzzle-piece.svg")}}" alt="" class="icon">Mes réponses</a>
+				</button>
+			</li>
+		</ul>
+	</nav>
+{% endif %}</aside>
