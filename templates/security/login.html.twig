@@ -20,6 +20,7 @@
 			<label for="username">Email</label><input type="email" id="email" name="_username" value='{{username}}'>
 			<label for="password">Mot de passe</label><input type="password" id="password" name="_password">
 			<input type="submit">
+			<a href="{{path("inscription")}}">Vous n'avez pas un compte ?</a>
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 			<label>
 			<input type="checkbox" name="_remember_me"> Se souvenir de moi
