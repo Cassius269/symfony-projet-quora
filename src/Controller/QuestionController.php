@@ -24,7 +24,7 @@ class QuestionController extends AbstractController
         path: '/question/ask',
         name: 'question_askForm'
     )]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function askAQuestion(Request $request, EntityManagerInterface $entityManager): Response
     {
         // Le repertoire de la classe Question
         $questionRepository = $entityManager->getRepository(Question::class);
@@ -97,6 +97,7 @@ class QuestionController extends AbstractController
             $comment->setUser($user);
             $comment->setQuestion($question);
             $comment->setRating(0);
+            $question->setNbrOfResponses($question->getNbrOfResponses() + 1);
             $em->persist($comment);
             $em->flush();
 

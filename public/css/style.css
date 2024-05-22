@@ -515,3 +515,14 @@ form li {
     color:red
 }
 
+.divMenu {
+    display: flex;
+  justify-content: space-between;
+  width: 158px;  
+}
+
+.divMenu a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
