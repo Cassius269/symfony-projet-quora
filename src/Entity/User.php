@@ -21,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180)]
     #[Assert\Email(message: 'Veuillez un email correct')]
-    #[Asser\NotBlank(message: 'Veuillez renseigner votre email')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre email')]
     private ?string $email = null;
 
     /**
@@ -35,18 +35,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\Length(
-        min:8,
-        minMessage:'Le mot de passe doit faire 8 caractères au moins'
+        min: 8,
+        minMessage: 'Le mot de passe doit faire 8 caractères au moins'
     )]
-    #[Assert\NotBlank(message:'Veuillez renseigner votre mot de passe')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre mot de passe')]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:'Veuillez renseigner votre prénom')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre prénom')]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:'Veuillez renseigner votre nom de famille')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre nom de famille')]
     private ?string $lastname = null;
 
     /**
@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    
+
     private ?string $imageProfile = null;
 
     public function __construct()

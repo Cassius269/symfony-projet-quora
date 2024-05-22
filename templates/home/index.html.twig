@@ -8,6 +8,8 @@
 		{% if questions %}
 			<ul>
 				{% for question in questions %}
+					{% set imageOfProfile = question.user.imageProfile ?? 'images/default-profile.svg' %}
+
 					<li>
 						<article class="articleQuestion">
 							{% include "partials/_votes.html.twig" with {rating: question.rating, from:'question',id:question.id } %}
@@ -18,9 +20,9 @@
 										<p id="question">{{ question.content}}</p>
 									</a>
 									<div class="divAuthor">
-										<img class="imageProfileAuthor" src='{{asset(question.user.imageProfile)}}' alt="image de profil">
+										<img class="imageProfileAuthor" src='{{asset(imageOfProfile)}}' alt="image de profil">
 										<p style="align-content: center">Demandé par
-											<a href="#" class="author">{{question.user.lastname}}
+											<a href="{{ path('userQuestions', {'id': question.user.id}) }}" class="author">{{question.user.lastname}}
 												{{question.user.firstname}}</a>
 										</p>
 									</div>
@@ -35,6 +37,8 @@
 					</li>
 				{% endfor %}
 			</ul>
+		{% else %}
+			<p>Aucune question posée pour le moment</p>
 		{% endif %}
 	</main>
 {% endblock %}

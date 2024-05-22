@@ -62,7 +62,7 @@ class QuestionController extends AbstractController
         path: '/question/{id}',
         name: 'question_detail'
     )]
-    public function showQuestionDetail(Question $question, Request $request, EntityManagerInterface $em): Response
+    public function commentAQuestion(Question $question, Request $request, EntityManagerInterface $em): Response
     {
         // Récuperer le repértoire des réponses
         $commentRepository = $em->getRepository(comment::class);
@@ -85,14 +85,16 @@ class QuestionController extends AbstractController
             ]);
 
             if ($commentBDD) { // dans le cas où une question similaire existe, montrer un message flash et relancer la page
-                $this->addFlash("erreur", "Une réponse similaire existe sur cette question");
+                $this->addFlash("error", "Une réponse similaire existe sur cette question");
 
                 return $this->redirect(
                     $request->getUri()
                 );
             }
+            $user = $this->getUser();
+
             $comment->setCreatedAt(new \DateTimeImmutable());
-            $comment->setUser($this->getUser());
+            $comment->setUser($user);
             $comment->setQuestion($question);
             $comment->setRating(0);
             $em->persist($comment);

@@ -8,6 +8,8 @@
 		{% for comment in question.comments %}
 			{{comment.user.firstname}}
 		{% endfor %}
+		{% set imageOfProfileQuestionUser = question.user.imageProfile ?? 'images/default-profile.svg' %}
+		{% set imageOfProfileCommentUser = comment.user.imageProfile ?? 'images/default-profile.svg' %}
 
 		<section>
 			<article class="questionDetail">
@@ -20,11 +22,11 @@
 							<span class="spanQuestion">Question</span>
 						</h1>
 					</div>
-					<img class="imageProfileAuthor" src='{{asset(question.user.imageProfile)}}' alt="photographie de l'auteur de la question">
+					<img class="imageProfileAuthor" src='{{asset(imageOfProfileQuestionUser)}}' alt="photographie de l'auteur de la question">
 				</div>
 				<p class="paragrapheQuestionDetail">{{question.content }}
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																											Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																					Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
 				</p>
 				{{form(commentForm)}}
 				</article>
@@ -38,11 +40,11 @@
 								<div class="nomPlusImage">
 
 									<a href="#" title="page de profil de l'auteur de la réponsee">
-										<h3>{{question.user.lastname}}
-											{{question.user.firstname}}
+										<h3>{{comment.user.lastname}}
+											{{comment.user.firstname}}
 										</h3>
 									</a>
-									<img class="imageProfileAuthor" src='{{asset(comment.user.imageProfile)}}' alt="image photographie représentant un utilisateur">
+									<img class="imageProfileAuthor" src='{{asset(imageOfProfileCommentUser)}}' alt="image photographie représentant un utilisateur">
 								</div>
 								<p>{{ comment.createdAt | ago(locale='fr')}}</p>
 							</div>
