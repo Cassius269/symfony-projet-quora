@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
             $file = $form['imageProfile']->getData();
 
 
-            if (in_array($file->getMimeType(), ["image/jpeg", "image/jpg"])) {
+            if (in_array($file->getMimeType(), ["image/jpeg", "image/jpg", "image/png"])) {
                 $file->move('images', $nameFile . '.jpeg');
                 $plainTextpassword = $user->getPassword();
                 $user->setPassword($passwordHasher->hashPassword($user, $plainTextpassword));
