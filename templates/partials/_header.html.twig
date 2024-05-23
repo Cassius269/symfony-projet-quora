@@ -7,7 +7,7 @@
 	<div class="divMenu">
 		{% if  is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 			{% set imageOfProfile = app.user.imageProfile ?? 'inconnu' %}
-			<a href=""><img src="{{ asset(imageOfProfile)}}" alt="photographie représentant l'utilisateur connecté" class="imageProfileAuthor"></a>
+			<a href="{{ path('user_currentprofile') }}"><img src="{{ asset(imageOfProfile)}}" alt="photographie représentant l'utilisateur connecté" class="imageProfileAuthor"></a>
 			<a href="{{path('logout')}}">
 				<button>Déconnexion</button>
 			</a>

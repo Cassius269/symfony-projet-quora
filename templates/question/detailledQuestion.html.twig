@@ -25,7 +25,7 @@
 				</div>
 				<p class="paragrapheQuestionDetail">{{question.content }}
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, incidunt saepe nobis repellat similique explicabo eaque qui quis voluptates! 
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																															Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									Voluptas sint debitis dicta voluptatum unde optio officia doloribus. Provident, consequuntur?
 				</p>
 				{{form(commentForm)}}
 				</article>
@@ -39,7 +39,7 @@
 							<div class="divArticleComment">
 								<div class="nomPlusImage">
 
-									<a href="#" title="page de profil de l'auteur de la réponsee">
+									<a href="{{ path('user_profile', {id: comment.user.id}) }}" title="page de profil de l'auteur de la réponsee">
 										<h3>{{comment.user.lastname}}
 											{{comment.user.firstname}}
 										</h3>

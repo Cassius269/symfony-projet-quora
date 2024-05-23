@@ -22,7 +22,7 @@
 									<div class="divAuthor">
 										<img class="imageProfileAuthor" src='{{asset(imageOfProfile)}}' alt="image de profil">
 										<p style="align-content: center">Demandé par
-											<a href="{{ path('userQuestions', {'id': question.user.id}) }}" class="author">{{question.user.lastname}}
+											<a href="{{ path('user_profile', {'id': question.user.id}) }}" class="author">{{question.user.lastname}}
 												{{question.user.firstname}}</a>
 										</p>
 									</div>
