@@ -526,3 +526,19 @@ form li {
     flex-direction: column;
     justify-content: center;
 }
+
+
+.formEditProfile {
+    display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formEditProfile button {
+    width: 150px;
+  border: none;
+  background: #8feaff;
+  margin: auto;
+    margin-top: auto;
+  margin-top: 1rem;
+}
