@@ -27,7 +27,7 @@ html {
 
 a {
     text-decoration: none;
-    color:black;
+    color: black;
 }
 
 /* Stylisation de la mise en globale en mobile first*/
@@ -48,7 +48,7 @@ body {
     ;
     height: 100vh;
 }
- 
+
 
 /* Stylisation des titres */
 h1,
@@ -272,8 +272,9 @@ textarea {
 }
 
 .formAskQuestion * {
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
 }
+
 form input {
     font-size: 1.5rem;
     text-align: center;
@@ -286,13 +287,13 @@ form input {
 }
 
 .formAskQuestion {
-        max-width: 700px;
-        margin: auto;
-        margin-bottom: 4rem;
-        padding: 2rem 2rem;
-        border-radius: var(--border-radius);
-        background: #FEFBF6;
-        box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
+    max-width: 700px;
+    margin: auto;
+    margin-bottom: 4rem;
+    padding: 2rem 2rem;
+    border-radius: var(--border-radius);
+    background: #FEFBF6;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
 }
 
 .formAskQuestionDivSubmit {
@@ -315,11 +316,11 @@ form input {
     padding-top: 10px;
 }
 
-.listMessage  li {
-  width: 90%;
-  margin-left: auto;
-  text-align: center;
-  padding-top: 5px;
+.listMessage li {
+    width: 90%;
+    margin-left: auto;
+    text-align: center;
+    padding-top: 5px;
 }
 
 .flash-success {
@@ -339,21 +340,21 @@ form input {
     background: rgb(246, 244, 241);
     padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.18) 0 2px 4px;
-  }
+}
 
- .spanQuestion {
+.spanQuestion {
     background: #3CBDBB;
     padding: 5px;
     border-radius: 5px;
-    margin-left: 4px;  
- }
+    margin-left: 4px;
+}
 
- .divTitreQuestion {
+.divTitreQuestion {
     display: flex;
-  justify-content: space-between;
- }
+    justify-content: space-between;
+}
 
- .imageProfileAuthor {
+.imageProfileAuthor {
     height: 35px;
     border-radius: 50%;
     margin-top: 1.1rem 7px 0 0;
@@ -361,7 +362,7 @@ form input {
 
 .titleQuestionDetail {
     margin-top: 1.1rem;
-    margin-left:1rem;
+    margin-left: 1rem;
 }
 
 .paragrapheQuestionDetail {
@@ -375,42 +376,43 @@ form input {
 
 #comment_content {
     width: 54.5vw;
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
     margin-top: 1rem;
 }
 
 #comment_submit {
     background: var(--couleurPrimaire);
-  border: none;
-  color: white;
+    border: none;
+    color: white;
 }
 
 .nomPlusImage {
-display: flex;
-gap:15px
+    display: flex;
+    gap: 15px
 }
 
-.nomPlusImage h3{
+.nomPlusImage h3 {
     color: #3CBDBB;
 
 }
 
 .articleCommentaire {
     margin: 10px 0 10px 0;
-    background-color: rgb(247, 247, 247);    
+    background-color: rgb(247, 247, 247);
     padding: 1.4rem;
     border-radius: 5px;
     display: flex;
-  justify-content: space-between;
+    justify-content: space-between;
 }
 
 .divArticleComment {
     display: flex;
-  justify-content: space-between;
-  margin-bottom:1rem
+    justify-content: space-between;
+    margin-bottom: 1rem
 }
 
-.divArticleComment p, .divArticleComment a{
+.divArticleComment p,
+.divArticleComment a {
     align-content: center;
 }
 
@@ -419,14 +421,14 @@ gap:15px
 }
 
 .articleCommentaire .votes {
-position: relative;
-  bottom: 0.7rem;
+    position: relative;
+    bottom: 0.7rem;
 }
 
 
 .divCommentPlusImagePlusCreatedAtPlusContent {
     flex: 1;
-  margin-left: 1.5rem;
+    margin-left: 1.5rem;
 
 }
 
@@ -443,10 +445,10 @@ position: relative;
     color: #40A2E3;
 }
 
-.votesQuestionPageDetail{
-  position: relative;
-  bottom: 1rem;
-  margin-right: 1rem;
+.votesQuestionPageDetail {
+    position: relative;
+    bottom: 1rem;
+    margin-right: 1rem;
 }
 
 .divTitreQuestion .imageProfileAuthor {
@@ -512,13 +514,13 @@ position: relative;
 
 /* Coloration des erreurs de formulaire en rouge */
 form li {
-    color:red
+    color: red
 }
 
 .divMenu {
     display: flex;
-  justify-content: space-between;
-  width: 158px;  
+    justify-content: space-between;
+    width: 158px;
 }
 
 .divMenu a {
@@ -530,15 +532,19 @@ form li {
 
 .formEditProfile {
     display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.formEditProfile button {
+.formEditProfile .buttonSubmit {
     width: 150px;
-  border: none;
-  background: #8feaff;
-  margin: auto;
+    border: none;
+    background: #8feaff;
+    margin: auto;
     margin-top: auto;
-  margin-top: 1rem;
+    margin-top: 1rem;
+}
+
+.formProfile {
+    display: grid;
 }

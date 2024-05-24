@@ -9,9 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 #[Route(path: '/user', name: 'user_')]
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
@@ -30,43 +34,51 @@ class UserController extends AbstractController
     }
 
     #[Route('/', name: 'currentprofile')]
-    public function showCurrentUserProfile(Request $request, EntityManagerInterface $em, PasswordHasherInterface $passwordHasher=null): Response
+    public function showCurrentUserProfile(Request $request, EntityManagerInterface $em, PasswordHasherInterface $passwordHasher = null): Response
     {
         $user = $this->getUser();
 
 
-    
-        // Création du formulaire
-        $form = $this->createForm(UserType::class, $user);
+
+        // Création du formulaire personnalisé
+        $form = $this->createFormBuilder($user)
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom :',
+                'attr' => [
+                    "class" => 'formProfile'
+                ]
+            ])
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom :'
+            ])
+            ->add('email')
+            ->add('imageProfile', FileType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'accept' => 'images/*'
+                ],
+                'required' => false
+            ])
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    "class" => "buttonSubmit"
+                ]
+            ])
+            ->getForm();
+
         $form->handleRequest($request);
 
         // Test du formulaire
-        if($form->isSubmitted() && $form->isValid()){
-            $plainPassword = $user->getPassword();
-
-            $isTheSamePassword = $passwordHasher->isPasswordValid($user, $plainPassword);
-            dd($isTheSamePassword);
-
-            if($isTheSamePassword == true){
-                $this->addFlash('error','Le mot de passe saisi est identitique');
-            }else {
-                    $hashedPassword= $passwordHasher->hashPassword($user, $plainPassword);
-
-                    $user->setPassword($hashedPassword);
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            dump($user);
 
             $user->setUpdatedAt(new DateTime());
             $em->flush();
-
-            $this->addFlash("success",'Mise à jour du profil effectué');
         }
-        // Updating en base de données
 
         return $this->render('user/currentprofile.html.twig', [
             'form' => $form->createView(),
             'user' => $user
         ]);
-
-
     }
 }

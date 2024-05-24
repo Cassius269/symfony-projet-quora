@@ -4,47 +4,47 @@
 {% endblock %}
 
 {% block body %}
-<style>
-section {
-	background: antiquewhite;
-  padding: 1rem;
-  margin-bottom: 3rem;
-}
+	<style>
+		section {
+			background: antiquewhite;
+			padding: 1rem;
+			margin-bottom: 3rem;
+		}
 
-h3 {
-	  margin-bottom: 0.5rem;
-	  margin-top:1rem;
-	  font-weight:normal;
-}
-
-</style>
+		h3 {
+			margin-bottom: 0.5rem;
+			margin-top: 1rem;
+			font-weight: normal;
+		}
+	</style>
 	<main>
-			<section>
-					<h1>La page de profil de l'utilisateur connecté
-			{{app.user.firstname}}</h1>
+		<section>
+			<h1>La page de profil de l'utilisateur connecté
+				{{app.user.firstname}}</h1>
+			{{form(form)}}
 
-			{{form_start(form,{'attr':{'class':'formEditProfile'}})}}
-			{{form_rest(form,{'attr':{'novalidate':'novalidate'}})}}
-			<button>Mettre à jour</button>
-			{{form_end(form)}}
 			</section>
 
-		<section>
-		<h2>Mes questions</h2>
-		<article>	
-			{% for question in app.user.questions %}
-			<a href="{{path('question_detail',{ id: question.id})}}" title=""><h3>{{ question.title }}</h3></a>
-			{% endfor %}
-		</article>
-		</section>
+			<section>
+				<h2>Mes questions</h2>
+				<article>
+					{% for question in app.user.questions %}
+						<a href="{{path('question_detail',{ id: question.id})}}" title="">
+							<h3>{{ question.title }}</h3>
+						</a>
+					{% endfor %}
+				</article>
+			</section>
 
-		<section>
-		<h2>Mes reponses</h2>
-		<article>	
-			{% for comment in app.user.comments %}
-			<a href="{{path('question_detail',{ id: comment.question.id})}}" title=""><h3>{{ comment.content }}</h3></a>
-			{% endfor %}
-		</article>
-		</section>
-	</main>
-{% endblock %}
+			<section>
+				<h2>Mes reponses</h2>
+				<article>
+					{% for comment in app.user.comments %}
+						<a href="{{path('question_detail',{ id: comment.question.id})}}" title="">
+							<h3>{{ comment.content }}</h3>
+						</a>
+					{% endfor %}
+				</article>
+			</section>
+		</main>
+	{% endblock %}
