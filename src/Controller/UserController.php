@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 #[Route(path: '/user', name: 'user_')]
@@ -28,7 +29,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_currentprofile');
         }
 
-        return $this->render('user/userprofile.html.twig', [
+        return $this->render('user/userProfile.html.twig', [
             'user' => $user
         ]);
     }
@@ -76,9 +77,30 @@ class UserController extends AbstractController
             $em->flush();
         }
 
-        return $this->render('user/currentprofile.html.twig', [
+        return $this->render('user/currentProfile.html.twig', [
             'form' => $form->createView(),
             'user' => $user
         ]);
+    }
+
+    #[Route(
+        path: '/delete/{id}',
+        name: "deleting"
+    )]
+    public function removeUser(User $user, EntityManagerInterface $em, Security $security): Response
+    {
+        $this->denyAccessUnlessGranted('POST_DELETE', $user);
+
+        if ($this->getUser()->getUserIdentifier() === $user->getUserIdentifier()) {
+            // Supprimer aussi les données liées à son auteur: questions, réponses, photo de profil
+            $em->remove($user);
+            $em->flush();
+        } else {
+            throw $this->createNotFoundException("Vous n'avez pas le droit supprimer ce profil");
+        }
+
+        $response = $security->logout(false);
+
+        return $response;
     }
 }

@@ -16,6 +16,13 @@
 			margin-top: 1rem;
 			font-weight: normal;
 		}
+
+		.divButtonDelete button {
+			display: block;
+			margin-left: auto;
+			background: #ee642e;
+			color: white;
+		}
 	</style>
 	<main>
 		<section>
@@ -23,6 +30,11 @@
 				{{app.user.firstname}}</h1>
 			{{form(form)}}
 
+				<div class="divButtonDelete">
+					<a href="{{path('user_deleting',{id:app.user.id})}}" title="supprimer mon compte">
+						<button>Supprimer mon compte</button>
+					</a>
+				</div>
 			</section>
 
 			<section>
