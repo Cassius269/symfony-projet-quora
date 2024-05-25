@@ -38,6 +38,7 @@ class UserController extends AbstractController
     #[Route('/', name: 'currentprofile')]
     public function showCurrentUserProfile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
+        /** @var \App\Entity\User */
         $user = $this->getUser();
 
         // Création du formulaire personnalisé

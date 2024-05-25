@@ -14,7 +14,14 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(QuestionRepository $questionRepository): Response
     {
-        $questions = $questionRepository->findAll();
+        // Tri des questions par la plus récente à la plus ancienne
+        $questions = $questionRepository->findBY(
+            [],
+            [
+                'createdAt' => 'DESC'
+            ]
+
+        );
 
         return $this->render('home/index.html.twig', [
             //'questions' => HomeController::$questions,

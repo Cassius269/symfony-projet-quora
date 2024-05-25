@@ -63,7 +63,7 @@
 				<article>
 					{% for comment in app.user.comments %}
 						<a href="{{path('question_detail',{ id: comment.question.id})}}" title="">
-							<h3>{{ comment.content }}</h3>
+							<h3>{{ comment.content | slice(0,20) }}....</h3>
 						</a>
 					{% endfor %}
 				</article>
