@@ -6,17 +6,18 @@ use DateTime;
 use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Scalar\MagicConst\Dir;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route(path: '/user', name: 'user_')]
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
@@ -35,11 +36,9 @@ class UserController extends AbstractController
     }
 
     #[Route('/', name: 'currentprofile')]
-    public function showCurrentUserProfile(Request $request, EntityManagerInterface $em, PasswordHasherInterface $passwordHasher = null): Response
+    public function showCurrentUserProfile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = $this->getUser();
-
-
 
         // Création du formulaire personnalisé
         $form = $this->createFormBuilder($user)
@@ -60,6 +59,10 @@ class UserController extends AbstractController
                 ],
                 'required' => false
             ])
+            ->add('newPassword', PasswordType::class, [
+                'label' => 'Nouveau mot de passe',
+                'required' => false
+            ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     "class" => "buttonSubmit"
@@ -71,10 +74,27 @@ class UserController extends AbstractController
 
         // Test du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($user);
+
+
+
+            /* Debut traitement de modification d'image
+            $fullName = ($user->getFirstName() . $user->getLastName()) . '.jpeg';
+           // rechercher le fichier si il n'existe pas
+            dump(in_array('FahamiMOHAMED ALI.jpeg', scandir(__DIR__ . '/../../public/images/')));
+            // si le fichier est trouvé, le remplacer le nouveau
+
+            */
+
+            $newPassword = $user->getNewPassword();
+
+            if ($newPassword) {
+                $hashedNewPassword = $passwordHasher->hashPassword($user, $newPassword);
+                $user->setPassword($hashedNewPassword);
+            }
 
             $user->setUpdatedAt(new DateTime());
             $em->flush();
+            $this->addFlash('success', 'Votre profil a été mis à jour');
         }
 
         return $this->render('user/currentProfile.html.twig', [
