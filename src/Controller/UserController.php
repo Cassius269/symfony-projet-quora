@@ -64,6 +64,7 @@ class UserController extends AbstractController
                 'required' => false
             ])
             ->add('submit', SubmitType::class, [
+                'label' => 'Mettre à jour',
                 'attr' => [
                     "class" => "buttonSubmit"
                 ]
