@@ -1,5 +1,10 @@
 <section>
-	<h2>Mes questions</h2>
+	{% if user == app.user %}
+		<h2>Mes questions</h2>
+
+	{% else %}
+		<h2>Questions</h2>
+	{% endif %}
 	<article>
 		{% for question in user.questions %}
 			<a href="{{path('question_detail',{ id: question.id})}}" title="">
@@ -10,7 +15,13 @@
 </section>
 
 <section>
-	<h2>Mes reponses</h2>
+	{% if user == app.user %}
+		<h2>Mes réponses</h2>
+
+	{% else %}
+		<h2>Réponses</h2>
+	{% endif %}
+
 	<article>
 		{% for comment in user.comments %}
 			<a href="{{path('question_detail',{ id: comment.question.id})}}" title="">
