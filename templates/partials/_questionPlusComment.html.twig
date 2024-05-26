@@ -1,0 +1,21 @@
+<section>
+	<h2>Mes questions</h2>
+	<article>
+		{% for question in user.questions %}
+			<a href="{{path('question_detail',{ id: question.id})}}" title="">
+				<h3>{{ question.title }}</h3>
+			</a>
+		{% endfor %}
+	</article>
+</section>
+
+<section>
+	<h2>Mes reponses</h2>
+	<article>
+		{% for comment in user.comments %}
+			<a href="{{path('question_detail',{ id: comment.question.id})}}" title="">
+				<h3>{{ comment.content | slice(0,20) }}....</h3>
+			</a>
+		{% endfor %}
+	</article>
+</section>

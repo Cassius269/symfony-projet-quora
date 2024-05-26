@@ -548,3 +548,32 @@ form li {
 .formProfile {
     display: grid;
 }
+
+.contentComment {
+    width: 55%;
+  word-wrap: break-word;
+}
+
+/* Stylisation de la page de profil de l'utilisateur non connecté */
+.sectionDivPresentationProfil {
+    display: flex;
+  gap: 2rem;
+}
+
+.sectionDivPresentationProfil p{
+    align-content: center;
+    display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem;
+}
+
+
+.sectionDivPresentationProfil span{
+    font-weight: bold;
+}
+
+section {
+    background: #f2f2f2;
+  padding: 1rem;
+  margin-bottom: 3rem;
+}

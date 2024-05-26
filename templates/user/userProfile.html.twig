@@ -5,6 +5,25 @@
 
 {% block body %}
 	<main>
-		<h1>La page de profil d'un utilisateur lambda</h1>
+		<h1>La page de profil de
+			{{user.lastname}}
+			{{user.firstname}}</h1>
+
+		<section>
+			{% set imageProfile = user.imageProfile %}
+			<div class="sectionDivPresentationProfil">
+				<img src="{{asset(imageProfile)}}" alt="photographie représentant la photographie d'un utilisateur non connecté" width="200px">
+				<p>
+					<span>Prénom :</span>
+					{{user.firstname}}<br>
+					<br>
+					<span>Nom de Famille :</span>
+					{{user.lastname}}<br>
+					<span>Email :</span>
+					{{user.email}}<br>
+				</p>
+			</div>
+		</section>
+		{% include 'partials/_questionPlusComment.html.twig' with {'user': user} %}
 	</main>
 {% endblock %}
