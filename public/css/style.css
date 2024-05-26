@@ -572,7 +572,7 @@ form li {
     font-weight: bold;
 }
 
-section {
+.sectionProfile {
     background: #f2f2f2;
   padding: 1rem;
   margin-bottom: 3rem;
