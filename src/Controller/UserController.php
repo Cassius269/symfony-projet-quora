@@ -82,7 +82,7 @@ class UserController extends AbstractController
     )]
     public function removeUser(User $user, EntityManagerInterface $em, Security $security): Response
     {
-        $this->denyAccessUnlessGranted('POST_DELETE', $user);
+        $this->denyAccessUnlessGranted('USER_DELETE', $user);
 
         if ($this->getUser()->getUserIdentifier() === $user->getUserIdentifier()) {
             // Supprimer aussi les données liées à son auteur: questions, réponses, photo de profil

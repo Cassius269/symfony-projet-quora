@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserVoter extends Voter
 {
-    public const DELETE = 'POST_DELETE';
+    public const DELETE = 'USER_DELETE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
