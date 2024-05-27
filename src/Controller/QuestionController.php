@@ -2,20 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Entity\Vote;
 use App\Entity\Comment;
 use App\Entity\Question;
-use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\QuestionType;
+use App\Repository\VoteRepository;
+use function PHPUnit\Framework\isEmpty;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-use function PHPUnit\Framework\isEmpty;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 class QuestionController extends AbstractController
@@ -114,11 +116,38 @@ class QuestionController extends AbstractController
     }
 
     #[Route(path: "question/rating/{id}/{score}", name: 'question_rating')]
-    public function ratingQuestion(Question $question, int $score, EntityManagerInterface $em, Request $request): response
+    public function ratingQuestion(Question $question, int $score, EntityManagerInterface $em, Request $request, VoteRepository $voteRepository): response
     {
-        $question->setRating($question->getRating() + $score);
+        $user = $this->getUser();
+
+        if ($user !== $question->getUser()) {
+            $vote = $voteRepository->findBy([
+                'user' => $user,
+                'question' => $question
+            ])[0] ?? null;
+
+            // dd($vote);
+
+            if ($vote) {
+                if (($vote->isLiked() && $score > 0) || (!$vote->isLiked() && $score < 0)) {
+                    $em->remove($vote);
+                    $question->setRating($question->getRating() + ($score > 0 ? -1 : 1));
+                } else {
+                    $vote->setLiked(!$vote->isLiked());
+                    $question->setRating($question->getRating() + ($score > 0 ? 2 : -2));
+                }
+            } else {
+                $vote = new Vote;
+                $vote->setUser($user);
+                $vote->setQuestion($question);
+                $question->setRating($question->getRating() + $score);
+                $vote->setLiked($score > 0 ? true : false);
+                $em->persist($vote);
+            }
+            $em->flush();
+        }
+
         $referer = $request->server->get('HTTP_REFERER'); // $referer fait réferrence à l'URL de la requête précédente, en gros la page d'avant
-        $em->flush();
         return $referer ?  $this->redirect($referer) : $this->redirectToRoute('home');
     }
 

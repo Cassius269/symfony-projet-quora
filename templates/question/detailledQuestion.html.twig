@@ -4,10 +4,6 @@
 {% endblock %}
 {% block body %}
 	<main>
-
-		{% for comment in question.comments %}
-			{{comment.user.firstname}}
-		{% endfor %}
 		{% set imageOfProfileQuestionUser = question.user.imageProfile ?? 'images/default-profile.svg' %}
 
 		<section>

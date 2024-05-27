@@ -109,7 +109,6 @@ header {
     grid-area: header;
     margin: 0 12.5rem 0 12.5rem;
     box-shadow: 0px 4px 8px -2px rgba(9, 30, 66, 0.25);
-    width: 1223px;
     margin-left: 31rem;
     padding-right: -119rem;
     padding: 1rem;
@@ -551,29 +550,29 @@ form li {
 
 .contentComment {
     width: 55%;
-  word-wrap: break-word;
+    word-wrap: break-word;
 }
 
 /* Stylisation de la page de profil de l'utilisateur non connecté */
 .sectionDivPresentationProfil {
     display: flex;
-  gap: 2rem;
+    gap: 2rem;
 }
 
-.sectionDivPresentationProfil p{
+.sectionDivPresentationProfil p {
     align-content: center;
     display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.4rem;
+    grid-template-columns: 1fr auto;
+    gap: 0.4rem;
 }
 
 
-.sectionDivPresentationProfil span{
+.sectionDivPresentationProfil span {
     font-weight: bold;
 }
 
 .sectionProfile {
     background: #f2f2f2;
-  padding: 1rem;
-  margin-bottom: 3rem;
+    padding: 1rem;
+    margin-bottom: 3rem;
 }
