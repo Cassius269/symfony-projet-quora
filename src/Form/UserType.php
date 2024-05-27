@@ -17,21 +17,32 @@ class UserType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom :'
+                'label' => 'Prénom :',
+                'attr' => [
+                    "class" => 'formProfile'
+                ]
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom :'
             ])
             ->add('email')
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe'
-            ])
             ->add('imageProfile', FileType::class, [
                 'mapped' => false,
-                'required' => true,
-                'attr'=> [
+                'attr' => [
                     'accept' => 'images/*'
                 ],
+                'required' => false
+            ])
+            ->add('newPassword', PasswordType::class, [
+                'label' => 'Nouveau mot de passe',
+                'required' => false,
+                'mapped' => false,
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Mettre à jour',
+                'attr' => [
+                    "class" => "buttonSubmit"
+                ]
             ]);
     }
 

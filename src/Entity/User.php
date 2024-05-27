@@ -69,14 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTime $updatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-
     private ?string $imageProfile = null;
-
-    #[Assert\Length(
-        min: 8,
-        minMessage: 'Le mot de passe doit faire 8 caractères au moins'
-    )]
-    private ?string $newPassword = null;
 
     /**
      * @var Collection<int, Vote>
@@ -267,18 +260,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImageProfile(?string $imageProfile): static
     {
         $this->imageProfile = $imageProfile;
-
-        return $this;
-    }
-
-    public function getNewPassword(): ?string
-    {
-        return $this->newPassword;
-    }
-
-    public function setNewPassword(?string $newPassword): static
-    {
-        $this->newPassword = $newPassword;
 
         return $this;
     }
