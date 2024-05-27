@@ -31,12 +31,16 @@ class UserType extends AbstractType
                 'attr' => [
                     'accept' => 'images/*'
                 ],
-                'required' => false
+                'required' => true
             ])
             ->add('newPassword', PasswordType::class, [
                 'label' => 'Nouveau mot de passe',
                 'required' => false,
                 'mapped' => false,
+            ])
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe',
+                'required' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Mettre à jour',

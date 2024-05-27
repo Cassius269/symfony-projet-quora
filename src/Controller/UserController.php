@@ -42,7 +42,9 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         // Création du formulaire personnalisé
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user)
+            ->remove('password');
+
         $form->handleRequest($request);
 
         // Test du formulaire

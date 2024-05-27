@@ -19,7 +19,10 @@ class SecurityController extends AbstractController
     {
         $user = new User();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user)
+            ->remove('submit')
+            ->remove('newPassword');
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
