@@ -32,25 +32,16 @@
 		<section class="sectionProfile ">
 			<h1>La page de profil de l'utilisateur connecté
 				{{app.user.firstname}}</h1>
+			{{form(form)}}
 
-			{{ form_start(form)}}
-			{{form_row(form.firstname)}}
-			{{form_row(form.lastname)}}
-			{{form_row(form.email)}}
+				<div class="divButtonDelete">
+					<a href="{{path('user_deleting',{id:app.user.id})}}" title="supprimer mon compte">
+						<button>Supprimer mon compte</button>
+					</a>
+				</div>
+			</section>
 
-			{{form_row(form.imageProfile,{'required':false})}}
-			{{form_row(form.submit)}}
+			{% include 'partials/_questionPlusComment.html.twig' with {'user': app.user} %}
 
-			{{form_end(form,{'render_rest': false})}}
-
-			<div class="divButtonDelete">
-				<a href="{{path('user_deleting',{id:app.user.id})}}" title="supprimer mon compte">
-					<button>Supprimer mon compte</button>
-				</a>
-			</div>
-		</section>
-
-		{% include 'partials/_questionPlusComment.html.twig' with {'user': app.user} %}
-
-	</main>
-{% endblock %}
+		</main>
+	{% endblock %}

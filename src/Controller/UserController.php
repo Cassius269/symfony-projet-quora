@@ -43,7 +43,14 @@ class UserController extends AbstractController
 
         // Création du formulaire personnalisé
         $form = $this->createForm(UserType::class, $user)
-            ->remove('password');
+            ->remove('password')
+            ->add('imageProfile', FileType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'accept' => 'images/*'
+                ],
+                'required' => false
+            ]);
 
         $form->handleRequest($request);
 
@@ -60,6 +67,7 @@ class UserController extends AbstractController
 
             */
 
+            //dd($form->getData());
             $newPassword = $form->get('newPassword')->getdata();
 
             if ($newPassword) {

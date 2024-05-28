@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
@@ -20,6 +21,13 @@ class SecurityController extends AbstractController
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user)
+            ->add('imageProfile', FileType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'accept' => 'images/*'
+                ],
+                'required' => true
+            ])
             ->remove('submit')
             ->remove('newPassword');
 

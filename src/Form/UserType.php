@@ -26,13 +26,7 @@ class UserType extends AbstractType
                 'label' => 'Nom :'
             ])
             ->add('email')
-            ->add('imageProfile', FileType::class, [
-                'mapped' => false,
-                'attr' => [
-                    'accept' => 'images/*'
-                ],
-                'required' => true
-            ])
+
             ->add('newPassword', PasswordType::class, [
                 'label' => 'Nouveau mot de passe',
                 'required' => false,
