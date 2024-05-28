@@ -15,13 +15,7 @@ class HomeController extends AbstractController
     public function index(QuestionRepository $questionRepository): Response
     {
         // Tri des questions par la plus récente à la plus ancienne
-        $questions = $questionRepository->findBY(
-            [],
-            [
-                'createdAt' => 'DESC'
-            ]
-
-        );
+        $questions = $questionRepository->getQuestionsWithAuthor();
 
         return $this->render('home/index.html.twig', [
             //'questions' => HomeController::$questions,

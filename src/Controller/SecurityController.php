@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -50,6 +51,9 @@ class SecurityController extends AbstractController
                 $em->persist($user);
                 $em->flush();
                 $this->addFlash('success', 'Vous avez été enregistré');
+
+
+                return $this->redirectToRoute('login');
             } else {
                 $this->addFlash('error', 'Vous n\avez pas été enregistré');
                 $this->addFlash('error', "Le fichier n'est pas au bon format : choisissez par exemple JPEG, JPG");

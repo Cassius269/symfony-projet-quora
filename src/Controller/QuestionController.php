@@ -121,10 +121,10 @@ class QuestionController extends AbstractController
         $user = $this->getUser();
 
         if ($user !== $question->getUser()) {
-            $vote = $voteRepository->findBy([
+            $vote = $voteRepository->findOneBy([
                 'user' => $user,
                 'question' => $question
-            ])[0] ?? null;
+            ]) ?? null;
 
             // dd($vote);
 
@@ -157,10 +157,10 @@ class QuestionController extends AbstractController
         $user = $this->getUser();
 
         if ($user !== $comment->getUser()) {
-            $vote = $voteRepository->findBy([
+            $vote = $voteRepository->findOneBy([
                 'user' => $user,
                 'comment' => $comment
-            ])[0] ?? null;
+            ]) ?? null;
 
             // dd($vote);
 
