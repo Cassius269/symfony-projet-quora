@@ -152,11 +152,38 @@ class QuestionController extends AbstractController
     }
 
     #[Route(path: "comment/rating/{id}/{score}", name: 'comment_rating')]
-    public function ratingComment(Comment $comment, int $score, EntityManagerInterface $em, Request $request): response
+    public function ratingComment(Comment $comment, int $score, EntityManagerInterface $em, Request $request, VoteRepository $voteRepository): response
     {
-        $comment->setRating($comment->getRating() + $score);
-        $referer = $request->server->get('HTTP_REFERER');
-        $em->flush();
+        $user = $this->getUser();
+
+        if ($user !== $comment->getUser()) {
+            $vote = $voteRepository->findBy([
+                'user' => $user,
+                'comment' => $comment
+            ])[0] ?? null;
+
+            // dd($vote);
+
+            if ($vote) {
+                if (($vote->isLiked() && $score > 0) || (!$vote->isLiked() && $score < 0)) {
+                    $em->remove($vote);
+                    $comment->setRating($comment->getRating() + ($score > 0 ? -1 : 1));
+                } else {
+                    $vote->setLiked(!$vote->isLiked());
+                    $comment->setRating($comment->getRating() + ($score > 0 ? 2 : -2));
+                }
+            } else {
+                $vote = new Vote;
+                $vote->setUser($user);
+                $vote->setComment($comment);
+                $comment->setRating($comment->getRating() + $score);
+                $vote->setLiked($score > 0 ? true : false);
+                $em->persist($vote);
+            }
+            $em->flush();
+        }
+
+        $referer = $request->server->get('HTTP_REFERER'); // $referer fait réferrence à l'URL de la requête précédente, en gros la page d'avant
         return $referer ?  $this->redirect($referer) : $this->redirectToRoute('home');
     }
 
