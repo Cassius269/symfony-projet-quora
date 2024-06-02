@@ -3,7 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\UserUpdatedEvent;
-use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -19,11 +19,11 @@ class UserSubscriber implements EventSubscriberInterface
     public function onUpdatingUser(UserUpdatedEvent $event): void
     {
         // création du mail
-        $email = new Email();
+        $email = new TemplatedEmail();
         $email->from('Service Wonder <fahamygaston@gmail.com>')
             ->to('destinataire@hotmail.com')
-            ->subject('Mise à jour du profile')
-            ->text('Votre profile a été mis à jour');
+            ->subject('Mise à jour du profile.')
+            ->htmlTemplate('emails/updateProfile.html.twig');
 
         $this->mailer->send($email); //envoi du mail
     }
