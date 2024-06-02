@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\User;
+use App\Event\UserUpdatedEvent;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpParser\Node\Scalar\MagicConst\Dir;
@@ -17,6 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route(path: '/user', name: 'user_')]
@@ -36,7 +38,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/', name: 'currentprofile')]
-    public function showCurrentUserProfile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+    public function showCurrentUserProfile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, EventDispatcherInterface $eventDispatcher): Response
     {
         /** @var \App\Entity\User */
         $user = $this->getUser();
@@ -78,6 +80,7 @@ class UserController extends AbstractController
             $user->setUpdatedAt(new DateTime());
             $em->flush();
             $this->addFlash('success', 'Votre profil a été mis à jour');
+            $eventDispatcher->dispatch(new UserUpdatedEvent($user));
         }
 
         return $this->render('user/currentProfile.html.twig', [
