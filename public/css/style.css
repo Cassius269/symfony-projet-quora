@@ -583,3 +583,12 @@ form li {
     padding: 1rem;
     margin-bottom: 3rem;
 }
+
+.formResetPassword {
+    display: grid;
+  gap: 1rem;
+}
+
+.formResetPassword input[type='submit']{
+    width: 100px;
+}

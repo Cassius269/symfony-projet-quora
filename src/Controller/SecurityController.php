@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Event\NewUserEvent;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,11 +14,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class SecurityController extends AbstractController
 {
     #[Route('/inscription', name: 'inscription')]
-    public function subscribe(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+    public function subscribe(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, EventDispatcherInterface $eventDispatcher): Response
     {
         $user = new User();
 
@@ -52,6 +54,8 @@ class SecurityController extends AbstractController
                 $em->flush();
                 $this->addFlash('success', 'Vous avez été enregistré');
 
+                // Déclenchement de l'évenement d'envoi de mail à chaque nouvel utilisateur
+                $eventDispatcher->dispatch(new NewUserEvent($user));
 
                 return $this->redirectToRoute('login');
             } else {

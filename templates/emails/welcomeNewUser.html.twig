@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Modification de mot de passe</title>
+	</head>
+	<body>
+
+		{% apply inline_css(source('@css/welcomeUser.css'))%}
+		<section>
+			<h1>Bienvenu
+				{{email.toName}}
+			</h1>
+			<p>Nous vous souhaitons la bienvenu</p>
+			<a href="https://127.0.0.1:8000/login">
+				<button>
+					Me connecter
+				</button>
+			</a>
+		</section>
+		{% endapply %}</body>
+</html>

@@ -2,10 +2,13 @@
 
 namespace App\EventSubscriber;
 
+use App\Event\NewUserEvent;
 use App\Event\UserUpdatedEvent;
+use App\Event\UserResetPasswordEvent;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Mime\Address;
 
 class UserSubscriber implements EventSubscriberInterface
 {
@@ -28,10 +31,33 @@ class UserSubscriber implements EventSubscriberInterface
         $this->mailer->send($email); //envoi du mail
     }
 
+    public function onResetPassword()
+    {
+    }
+
+    public function onNewUserSubscription(NewUserEvent $event)
+    {
+        $user = $event->getUser();
+        $emailUser = $user->getEmail();
+
+        $email = new TemplatedEmail();
+        $email->from('Département RH <fahamygaston@gmail.com>')
+            ->to(new Address($emailUser, $user->getFirstname()))
+            ->subject('Bienvenu')
+            ->htmlTemplate('emails/welcomeNewUser.html.twig')
+            ->context([
+                'user' => $user
+            ]);
+
+        $this->mailer->send($email);
+    }
+
     public static function getSubscribedEvents(): array
     {
         return [
             UserUpdatedEvent::class => 'onUpdatingUser',
+            UserResetPasswordEvent::class => 'onResetPassword',
+            NewUserEvent::class => 'onNewUserSubscription'
         ];
     }
 }

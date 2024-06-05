@@ -6,6 +6,7 @@ use DateTime;
 use App\Entity\User;
 use App\Event\UserUpdatedEvent;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpParser\Node\Scalar\MagicConst\Dir;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -19,13 +20,15 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
-#[Route(path: '/user', name: 'user_')]
-#[IsGranted('IS_AUTHENTICATED_FULLY')]
+#[Route(name: 'user_')]
 class UserController extends AbstractController
 {
-    #[Route('/{id}', name: 'profile')]
+    #[Route('user/{id}', name: 'profile')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function showUserProfile(User $user): Response
     {
         if ($user == $this->getUser()) {
@@ -37,7 +40,8 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'currentprofile')]
+    #[Route('/user', name: 'currentprofile')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function showCurrentUserProfile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, EventDispatcherInterface $eventDispatcher): Response
     {
         /** @var \App\Entity\User */
@@ -91,9 +95,10 @@ class UserController extends AbstractController
     }
 
     #[Route(
-        path: '/delete/{id}',
+        path: '/user/delete/{id}',
         name: "deleting"
     )]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function removeUser(User $user, EntityManagerInterface $em, Security $security): Response
     {
         $this->denyAccessUnlessGranted('USER_DELETE', $user);
@@ -109,5 +114,47 @@ class UserController extends AbstractController
         $response = $security->logout(false);
 
         return $response;
+    }
+
+    #[Route(
+        path: '/reset-password',
+        name: 'resetPassword'
+    )]
+    public function resetPassword(Request $request, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
+    {
+        // Verifier si l'utilisateur est existant avec le contenu du formulaire à l'aide de son mail
+        $form = $this->createFormBuilder()
+            ->add('email', EmailType::class)
+            ->add('submit', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $email = $form->getData();
+            $submittedToken = $request->getPayload()->get('_token');
+            if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
+                // ... do something, like deleting an object
+                dd('hello');
+            }
+            dump($submittedToken);
+
+            $user = $userRepository->findOneBy(
+                [
+                    'email' => $email,
+                ]
+            );
+
+            if ($user) {
+            };
+        }
+
+        // Récuperation du token
+        // si le token est valid, stoker le token en BDD et envoyer un mail avec le token caché dans le bouton reset
+
+
+        return $this->render('security/resetPassword.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
