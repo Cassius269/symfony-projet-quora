@@ -4,9 +4,13 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\User;
-use App\Event\UserUpdatedEvent;
+use App\Entity\Token;
 use App\Form\UserType;
+use App\Event\UserUpdatedEvent;
 use App\Repository\UserRepository;
+use App\Event\UserResetPasswordEvent;
+use DateInterval;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpParser\Node\Scalar\MagicConst\Dir;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -16,13 +20,14 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as EventDispatcherEventDispatcherInterface;
 
 #[Route(name: 'user_')]
 class UserController extends AbstractController
@@ -120,7 +125,7 @@ class UserController extends AbstractController
         path: '/reset-password',
         name: 'resetPassword'
     )]
-    public function resetPassword(Request $request, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function resetPassword(Request $request, UserRepository $userRepository,  EventDispatcherEventDispatcherInterface $eventDispatcher, EntityManagerInterface $entityManager): Response
     {
         // Verifier si l'utilisateur est existant avec le contenu du formulaire à l'aide de son mail
         $form = $this->createFormBuilder()
@@ -132,20 +137,29 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->getData();
-            $submittedToken = $request->getPayload()->get('_token');
-            if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
-                // ... do something, like deleting an object
-                dd('hello');
-            }
-            dump($submittedToken);
 
+            // Recherche de l'utilisateur à partir du mail enregistré
             $user = $userRepository->findOneBy(
                 [
                     'email' => $email,
                 ]
             );
 
-            if ($user) {
+            if ($user) { // si utilisateur trouvé, déclencher l'évenement d'envoi de mail réinitilisation de mot de passe avec un token
+                dump($user);
+                $today = new Datetime();
+                $expiryDate = $today->add(new DateInterval('P10D'));
+                $token = new Token();
+                $token->setUser($user)
+                    ->setToken('abcd')
+                    ->setCreatedAt(new DateTimeImmutable())
+                    ->setExpiryDate($expiryDate);
+
+                $entityManager->persist($token);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Un email de réinitialisation vous a été envoyé par mail');
+                $eventDispatcher->dispatch(new UserResetPasswordEvent($user, $token));
             };
         }
 

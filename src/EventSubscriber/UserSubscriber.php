@@ -31,8 +31,21 @@ class UserSubscriber implements EventSubscriberInterface
         $this->mailer->send($email); //envoi du mail
     }
 
-    public function onResetPassword()
+    public function onResetPassword(UserResetPasswordEvent $event)
     {
+        $user = $event->getUser();
+        $emailUser = $user->getEmail();
+
+        $email = new TemplatedEmail();
+        $email->from('Département RH <fahamygaston@gmail.com>')
+            ->to(new Address($emailUser, $user->getFirstname()))
+            ->subject('Modification de mot de passe')
+            ->htmlTemplate('@templates_emails/welcomeNewUser.html.twig')
+            ->context([
+                //'user' => $user
+            ]);
+
+        $this->mailer->send($email);
     }
 
     public function onNewUserSubscription(NewUserEvent $event)
