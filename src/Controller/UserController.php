@@ -151,7 +151,7 @@ class UserController extends AbstractController
             if ($user) { // si utilisateur trouvé, déclencher l'évenement d'envoi de mail réinitilisation de mot de passe avec un token
                 dump($user);
                 $today = new Datetime();
-                $expiryDate = $today->add(new DateInterval('P10D'));
+                $expiryDate = $today->add(new DateInterval('PT1H'));
                 $token = new Token();
                 $token->setUser($user)
                     ->setToken(bin2hex(random_bytes(15)))
@@ -189,7 +189,7 @@ class UserController extends AbstractController
         $user = $token->getUser();
 
         //dd($user->getPassword());
-        if ($token->getExpiryDate() > new DateTime()) {
+        if ($token->getExpiryDate() > new DateTime()) { // si le token n'est pas expiré, permettre à l'utilisateur de modifier le mot de passe
 
             $form = $this->createForm(UserType::class, $user)
                 ->remove('firstname')
@@ -217,12 +217,14 @@ class UserController extends AbstractController
                     ]
                 );
                 // dd($tokens);
-                if ($tokens) {
+                if ($tokens) { // si l'utilisateur a des tokens en BDD, les supprimer après reset du mot de passe
                     foreach ($tokens as $registredToken) {
                         $entityManager->remove($registredToken);
                     }
                     $entityManager->flush();
                 }
+
+                return $this->redirectToRoute('login');
             }
         }
 
