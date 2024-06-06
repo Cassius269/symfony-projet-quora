@@ -26,7 +26,7 @@ class UserSubscriber implements EventSubscriberInterface
         $email->from('Service Wonder <fahamygaston@gmail.com>')
             ->to('destinataire@hotmail.com')
             ->subject('Mise à jour du profile.')
-            ->htmlTemplate('emails/updateProfile.html.twig');
+            ->htmlTemplate('@templates_emails/updateProfile.html.twig');
 
         $this->mailer->send($email); //envoi du mail
     }
@@ -44,9 +44,9 @@ class UserSubscriber implements EventSubscriberInterface
         $email->from('Département RH <fahamygaston@gmail.com>')
             ->to(new Address($emailUser, $user->getFirstname()))
             ->subject('Bienvenu')
-            ->htmlTemplate('emails/welcomeNewUser.html.twig')
+            ->htmlTemplate('@templates_emails/welcomeNewUser.html.twig')
             ->context([
-                'user' => $user
+                //'user' => $user
             ]);
 
         $this->mailer->send($email);

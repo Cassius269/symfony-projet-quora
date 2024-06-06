@@ -1,7 +1,8 @@
 twig:
   file_name_pattern: "*.twig"
   paths:
-    "%kernel.project_dir%/public/css": css #Ajout du chemin vers le dossier "public/css"
+    "%kernel.project_dir%/emails/css": css #Ajout du chemin vers le dossier "emails/css"
+    "%kernel.project_dir%/emails/templates": templates_emails #Ajout du chemin vers le dossier "emails/templates"
 
 when@test:
   twig:
