@@ -40,9 +40,10 @@ class UserSubscriber implements EventSubscriberInterface
         $email->from('Département RH <fahamygaston@gmail.com>')
             ->to(new Address($emailUser, $user->getFirstname()))
             ->subject('Modification de mot de passe')
-            ->htmlTemplate('@templates_emails/welcomeNewUser.html.twig')
+            ->htmlTemplate('@templates_emails/resetPassword.html.twig')
             ->context([
                 //'user' => $user
+                'token' => $event->getToken()
             ]);
 
         $this->mailer->send($email);

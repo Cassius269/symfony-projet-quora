@@ -3,26 +3,29 @@
 namespace App\Controller;
 
 use DateTime;
+use DateInterval;
 use App\Entity\User;
 use App\Entity\Token;
 use App\Form\UserType;
+use DateTimeImmutable;
 use App\Event\UserUpdatedEvent;
 use App\Repository\UserRepository;
+use App\Repository\TokenRepository;
 use App\Event\UserResetPasswordEvent;
-use DateInterval;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpParser\Node\Scalar\MagicConst\Dir;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -151,7 +154,7 @@ class UserController extends AbstractController
                 $expiryDate = $today->add(new DateInterval('P10D'));
                 $token = new Token();
                 $token->setUser($user)
-                    ->setToken('abcd')
+                    ->setToken(bin2hex(random_bytes(15)))
                     ->setCreatedAt(new DateTimeImmutable())
                     ->setExpiryDate($expiryDate);
 
@@ -169,6 +172,62 @@ class UserController extends AbstractController
 
         return $this->render('security/resetPassword.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    #[Route(
+        path: '/resetPasswordByEmail/{token}',
+        name: 'resetPasswordByEmail'
+    )]
+    public function resetPasswordByEmail(#[MapEntity(mapping: ['token' => 'token'])] Token $token, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    {
+
+        if (!$token) {
+            return $this->createNotFoundException('Le token n\'a pas été trouvé');
+        }
+
+        $user = $token->getUser();
+
+        //dd($user->getPassword());
+        if ($token->getExpiryDate() > new DateTime()) {
+
+            $form = $this->createForm(UserType::class, $user)
+                ->remove('firstname')
+                ->remove('lastname')
+                ->remove('newPassword')
+                ->remove('email');
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                // dd('Le token n\'est pas expiré');
+
+                $newPassword = $form["password"]->getData();
+                $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
+
+                $user->setPassword($hashedPassword);
+                $user->setUpdatedAt(new DateTime());
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Votre mot de passe a été mise à jour');
+
+                $tokens = $entityManager->getRepository(Token::class)->findBy(
+                    [
+                        'user' => $user
+                    ]
+                );
+                // dd($tokens);
+                if ($tokens) {
+                    foreach ($tokens as $registredToken) {
+                        $entityManager->remove($registredToken);
+                    }
+                    $entityManager->flush();
+                }
+            }
+        }
+
+        return $this->render('security/resetPassword.html.twig', [
+            'form' => $form
         ]);
     }
 }
