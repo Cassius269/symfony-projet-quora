@@ -10,23 +10,17 @@ use App\Form\UserType;
 use DateTimeImmutable;
 use App\Event\UserUpdatedEvent;
 use App\Repository\UserRepository;
-use App\Repository\TokenRepository;
 use App\Event\UserResetPasswordEvent;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Scalar\MagicConst\Dir;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -124,6 +118,7 @@ class UserController extends AbstractController
         return $response;
     }
 
+    // Action permettant de créer un token de réinitialisation de mot de passe
     #[Route(
         path: '/reset-password',
         name: 'resetPassword'
@@ -175,6 +170,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    // L'action permettant de modifier le mdp de l'utilisater
     #[Route(
         path: '/resetPasswordByEmail/{token}',
         name: 'resetPasswordByEmail'
@@ -183,7 +179,7 @@ class UserController extends AbstractController
     {
 
         if (!$token) {
-            return $this->createNotFoundException('Le token n\'a pas été trouvé');
+            $this->addFlash('error', 'Le token n\'existe pas, veuillez refaire la demande');
         }
 
         $user = $token->getUser();
@@ -220,12 +216,17 @@ class UserController extends AbstractController
                 if ($tokens) { // si l'utilisateur a des tokens en BDD, les supprimer après reset du mot de passe
                     foreach ($tokens as $registredToken) {
                         $entityManager->remove($registredToken);
+                        $entityManager->flush();
                     }
                     $entityManager->flush();
                 }
 
                 return $this->redirectToRoute('login');
             }
+        } else {
+            $entityManager->remove($token);
+            $entityManager->flush();
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('security/resetPassword.html.twig', [

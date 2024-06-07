@@ -6,13 +6,13 @@
 	</head>
 	<body>
 
-		{% apply inline_css(source('@css/welcomeUser.css'))%}
+		{% apply inline_css(source('@css/styleEmail.css'))%}
 		<section>
 			<h1>Bienvenu
 				{{email.toName}}
 			</h1>
 			<p>Nous vous souhaitons la bienvenu</p>
-			<a href="{ {path('login') }}">
+			<a href="{ {url('login') }}">
 				<button>
 					Me connecter
 				</button>

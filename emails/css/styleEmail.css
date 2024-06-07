@@ -1,0 +1,19 @@
+
+.title {
+    color:rgb(198, 85, 14);
+}
+
+h1 {
+    color: #93672d;
+}
+
+section {
+    display: grid;
+}
+
+button {
+    padding: 0.7rem;
+  font-size: 1.2rem;
+  background: #ffbf00;
+  border-radius: 20px;
+}
