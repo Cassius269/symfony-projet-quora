@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as EventDispatcherEventDispatcherInterface;
 
 #[Route(name: 'user_')]
@@ -123,8 +124,16 @@ class UserController extends AbstractController
         path: '/reset-password',
         name: 'resetPassword'
     )]
-    public function resetPassword(Request $request, UserRepository $userRepository,  EventDispatcherEventDispatcherInterface $eventDispatcher, EntityManagerInterface $entityManager): Response
+    public function resetPassword(RateLimiterFactory $passwordRecoveryLimiter, Request $request, UserRepository $userRepository,  EventDispatcherEventDispatcherInterface $eventDispatcher, EntityManagerInterface $entityManager): Response
     {
+        // Limiter le nombre de tentative de saisies de mails
+        $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
+        // Tester si toutes les tentatives ont été consommés: 4 tentatives possibles
+        if (false === $limiter->consume(1)->isAccepted()) {
+            $this->addFlash('error', 'Vous devez attendre une heure pour réssayer');
+            return $this->redirectToRoute('login');
+        }
+
         // Verifier si l'utilisateur est existant avec le contenu du formulaire à l'aide de son mail
         $form = $this->createFormBuilder()
             ->add('email', EmailType::class)
@@ -156,10 +165,10 @@ class UserController extends AbstractController
                 $entityManager->persist($token);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Un email de réinitialisation vous a été envoyé par mail');
                 $eventDispatcher->dispatch(new UserResetPasswordEvent($user, $token));
             };
         }
+        $this->addFlash('success', 'Un email de réinitialisation vous a été envoyé par mail');
 
         // Récuperation du token
         // si le token est valid, stoker le token en BDD et envoyer un mail avec le token caché dans le bouton reset
@@ -175,8 +184,15 @@ class UserController extends AbstractController
         path: '/resetPasswordByEmail/{token}',
         name: 'resetPasswordByEmail'
     )]
-    public function resetPasswordByEmail(#[MapEntity(mapping: ['token' => 'token'])] Token $token, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function resetPasswordByEmail(RateLimiterFactory $passwordRecoveryLimiter, #[MapEntity(mapping: ['token' => 'token'])] Token $token, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
+        // Limiter le nombre de tentative de saisies de mails
+        $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
+        // Tester si toutes les tentatives ont été consommés: 4 tentatives possibles
+        if (false === $limiter->consume(1)->isAccepted()) {
+            $this->addFlash('error', 'Vous devez attendre une heure pour réssayer');
+            return $this->redirectToRoute('login');
+        }
 
         if (!$token) {
             $this->addFlash('error', 'Le token n\'existe pas, veuillez refaire la demande');
