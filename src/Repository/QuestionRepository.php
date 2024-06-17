@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
 /**
  * @extends ServiceEntityRepository<Question>

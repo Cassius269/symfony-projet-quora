@@ -167,8 +167,8 @@ class UserController extends AbstractController
 
                 $eventDispatcher->dispatch(new UserResetPasswordEvent($user, $token));
             };
+            $this->addFlash('success', 'Un email de réinitialisation vous a été envoyé par mail');
         }
-        $this->addFlash('success', 'Un email de réinitialisation vous a été envoyé par mail');
 
         // Récuperation du token
         // si le token est valid, stoker le token en BDD et envoyer un mail avec le token caché dans le bouton reset

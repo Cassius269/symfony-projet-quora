@@ -2,9 +2,6 @@
 {% block body %}
 	<main>
 		<h1 class="titleHomePage">Liste des questions</h1>
-		<pre>
-			{{ dump(questions) }}
-		</pre>
 		{% if questions %}
 			<ul>
 				{% for question in questions %}
@@ -40,5 +37,7 @@
 		{% else %}
 			<p>Aucune question posée pour le moment</p>
 		{% endif %}
+
+		{{ knp_pagination_render(questions) }}
 	</main>
 {% endblock %}
