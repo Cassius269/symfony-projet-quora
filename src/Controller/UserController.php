@@ -66,25 +66,6 @@ class UserController extends AbstractController
 
         // Test du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-
-
-
-            /* Debut traitement de modification d'image
-            $fullName = ($user->getFirstName() . $user->getLastName()) . '.jpeg';
-           // rechercher le fichier si il n'existe pas
-            dump(in_array('FahamiMOHAMED ALI.jpeg', scandir(__DIR__ . '/../../public/images/')));
-            // si le fichier est trouvé, le remplacer le nouveau
-
-            */
-
-            //dd($form->getData());
-            // $newPassword = $form->get('newPassword')->getdata();
-
-            // if ($newPassword) {
-            //     $hashedNewPassword = $passwordHasher->hashPassword($user, $newPassword);
-            //     $user->setPassword($hashedNewPassword);
-            // }
-
             $user->setUpdatedAt(new DateTime());
             $em->flush();
             $this->addFlash('success', 'Votre profil a été mis à jour');
@@ -106,13 +87,9 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('USER_DELETE', $user);
 
-        if ($this->getUser()->getUserIdentifier() === $user->getUserIdentifier()) {
-            // Supprimer aussi les données liées à son auteur: questions, réponses, photo de profil
-            $em->remove($user);
-            $em->flush();
-        } else {
-            throw $this->createNotFoundException("Vous n'avez pas le droit supprimer ce profil");
-        }
+        // Supprimer aussi les données liées à son auteur: questions, réponses, photo de profil
+        $em->remove($user);
+        $em->flush();
 
         $response = $security->logout(false);
 

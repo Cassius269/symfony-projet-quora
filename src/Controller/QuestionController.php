@@ -194,7 +194,8 @@ class QuestionController extends AbstractController
     )]
     public function showQuestionsOfUser(User $user): Response
     {
-        $getQuestions = $user->getQuestions();
+        $getQuestions = $user->getQuestions(); // on obtient une collection d'objets de questions
+        // Pour pouvoir lire les questions, on stocke les questions trouvéees dans un tableau lisible en Twig
         $questions = [];
         foreach ($getQuestions as $question) {
             $questions[] = $question;

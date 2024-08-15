@@ -519,7 +519,8 @@ form li {
 .divMenu {
     display: flex;
     justify-content: space-between;
-    width: 158px;
+    position: relative;
+    bottom: 10px;
 }
 
 .divMenu a {
@@ -528,6 +529,9 @@ form li {
     justify-content: center;
 }
 
+#linkSubscription {
+    margin-right: 1rem;
+}
 
 .formEditProfile {
     display: flex;
