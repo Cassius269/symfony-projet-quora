@@ -23,7 +23,7 @@ class UserSubscriber implements EventSubscriberInterface
     {
         // création du mail
         $email = new TemplatedEmail();
-        $email->from('Service Wonder <fahamygaston@gmail.com>')
+        $email->from('Service Wonder <contact@fahami.fr>')
             ->to('destinataire@hotmail.com')
             ->subject('Mise à jour du profile.')
             ->htmlTemplate('@templates_emails/updateProfile.html.twig');
@@ -37,7 +37,7 @@ class UserSubscriber implements EventSubscriberInterface
         $emailUser = $user->getEmail();
 
         $email = new TemplatedEmail();
-        $email->from('Département RH <fahamygaston@gmail.com>')
+        $email->from('Département RH <contact@fahami.fr>')
             ->to(new Address($emailUser, $user->getFirstname()))
             ->subject('Modification de mot de passe')
             ->htmlTemplate('@templates_emails/resetPassword.html.twig')
@@ -55,7 +55,7 @@ class UserSubscriber implements EventSubscriberInterface
         $emailUser = $user->getEmail();
 
         $email = new TemplatedEmail();
-        $email->from('Département RH <fahamygaston@gmail.com>')
+        $email->from('Département RH <contact@fahami.fr>')
             ->to(new Address($emailUser, $user->getFirstname()))
             ->subject('Bienvenu')
             ->htmlTemplate('@templates_emails/welcomeNewUser.html.twig')
